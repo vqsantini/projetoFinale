@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<h2>Entrar</h2>
+
+<form method="POST">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="senha" placeholder="Senha" required>
+    <button type="submit">Entrar</button>
+</form>
+
+<p>Não possui conta? <a href="/register" style="color:#6f4aff;">Criar conta</a></p>
+
+{% endblock %}

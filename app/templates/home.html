@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Recomendações{% endblock %}
+{% block content %}
+
+<h2>Recomendações para você</h2>
+
+<ul>
+{% for musica in recomendacoes %}
+    <li>{{ musica.titulo }} — {{ musica.artista.nome }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

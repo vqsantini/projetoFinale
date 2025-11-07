@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Escolher Gostos{% endblock %}
+{% block content %}
+
+<h2>Escolha seus gostos musicais</h2>
+
+<form method="POST">
+    <label>Gêneros favoritos:</label>
+    <select name="generos" multiple>
+        {% for g in generos %}
+            <option value="{{ g.id }}">{{ g.nome }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Artistas favoritos:</label>
+    <select name="artistas" multiple>
+        {% for a in artistas %}
+            <option value="{{ a.id }}">{{ a.nome }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Salvar Preferências</button>
+</form>
+
+{% endblock %}

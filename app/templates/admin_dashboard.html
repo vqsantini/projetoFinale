@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-white max-w-5xl mx-auto py-12 space-y-12">
+
+    <h1 class="text-3xl font-bold">Painel do Admin</h1>
+    <p class="opacity-70">Gerencie gêneros, artistas e músicas</p>
+
+    <!-- GÊNEROS -->
+    <section class="bg-neutral-900 p-6 rounded-lg border border-neutral-700">
+        <h2 class="text-xl font-semibold mb-4">Gêneros</h2>
+
+        <form action="/admin/generos" method="POST" class="flex gap-2 mb-4">
+            <input name="nome" placeholder="Novo gênero" required class="bg-neutral-800 border border-neutral-700 px-3 py-2 rounded w-full">
+            <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Adicionar</button>
+        </form>
+
+        <table class="w-full text-left text-sm">
+            {% for g in generos %}
+            <tr class="border-b border-neutral-800">
+                <form action="/admin/generos/edit/{{ g.id }}" method="POST" class="flex w-full">
+                    <td class="py-2 w-full">
+                        <input name="nome" value="{{ g.nome }}" class="bg-neutral-800 border border-neutral-600 px-2 py-1 rounded w-full">
+                    </td>
+                    <td class="px-2">
+                        <button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded">Salvar</button>
+                    </td>
+                </form>
+                <td>
+                    <a href="/admin/generos/delete/{{ g.id }}" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded inline-block">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+
+
+    <!-- ARTISTAS -->
+    <section class="bg-neutral-900 p-6 rounded-lg border border-neutral-700">
+        <h2 class="text-xl font-semibold mb-4">Artistas</h2>
+
+        <form action="/admin/artistas" method="POST" class="flex gap-2 mb-4">
+            <input name="nome" placeholder="Novo artista" required class="bg-neutral-800 border border-neutral-700 px-3 py-2 rounded w-full">
+            <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Adicionar</button>
+        </form>
+
+        <table class="w-full text-left text-sm">
+            {% for a in artistas %}
+            <tr class="border-b border-neutral-800">
+                <form action="/admin/artistas/edit/{{ a.id }}" method="POST" class="flex w-full">
+                    <td class="py-2 w-full">
+                        <input name="nome" value="{{ a.nome }}" class="bg-neutral-800 border border-neutral-600 px-2 py-1 rounded w-full">
+                    </td>
+                    <td class="px-2">
+                        <button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded">Salvar</button>
+                    </td>
+                </form>
+                <td>
+                    <a href="/admin/artistas/delete/{{ a.id }}" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded inline-block">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+
+
+    <!-- MÚSICAS -->
+    <section class="bg-neutral-900 p-6 rounded-lg border border-neutral-700">
+        <h2 class="text-xl font-semibold mb-4">Músicas</h2>
+
+        <form action="/admin/musicas" method="POST" class="grid grid-cols-3 gap-2 mb-4">
+            <input name="titulo" placeholder="Nome da música" required class="bg-neutral-800 border border-neutral-700 px-3 py-2 rounded">
+            <select name="artista_id" class="bg-neutral-800 border border-neutral-700 rounded px-2">
+                {% for a in artistas %}
+                <option value="{{ a.id }}">{{ a.nome }}</option>
+                {% endfor %}
+            </select>
+            <select name="genero_id" class="bg-neutral-800 border border-neutral-700 rounded px-2">
+                {% for g in generos %}
+                <option value="{{ g.id }}">{{ g.nome }}</option>
+                {% endfor %}
+            </select>
+            <button class="col-span-3 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mt-2">Adicionar</button>
+        </form>
+
+        <table class="w-full text-left text-sm">
+            {% for m in musicas %}
+            <tr class="border-b border-neutral-800">
+                <form action="/admin/musicas/edit/{{ m.id }}" method="POST" class="grid grid-cols-4 gap-2 w-full py-1">
+                    <td><input name="titulo" value="{{ m.titulo }}" class="bg-neutral-800 border border-neutral-600 px-2 py-1 rounded w-full"></td>
+                    <td>
+                        <select name="artista_id" class="bg-neutral-800 border border-neutral-700 rounded px-2 w-full">
+                            {% for a in artistas %}
+                            <option value="{{ a.id }}" {% if m.artista_id == a.id %}selected{% endif %}>{{ a.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="genero_id" class="bg-neutral-800 border border-neutral-700 rounded px-2 w-full">
+                            {% for g in generos %}
+                            <option value="{{ g.id }}" {% if m.genero_id == g.id %}selected{% endif %}>{{ g.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="flex gap-2">
+                        <button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded">Salvar</button>
+                        <a href="/admin/musicas/delete/{{ m.id }}" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded inline-block">Excluir</a>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+
+</div>
+
+{% endblock %}
