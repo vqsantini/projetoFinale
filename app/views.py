@@ -1,83 +1,85 @@
 import os
-from flask import Flask, render_template, redirect, request, session
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from app import app, db, login_manager, bcrypt
+from flask import render_template, redirect, request, session, flash, url_for
+from flask_login import login_user, login_required, logout_user, current_user
 from dotenv import load_dotenv
-
-load_dotenv()
-
-app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET")
-
-db_path = os.getenv("SQLITE_DB")
-app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-db = SQLAlchemy(app)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login"
-
-
-# -------------------- MODELS --------------------
 from app.models import User, Genero, Artista, Musica, UserGenero, UserArtista
-
+from app.forms import LoginForm, RegisterForm 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
-# -------------------- ROTAS --------------------
+# --- Rotas Principais e de Autenticação ---
 
 @app.route("/")
-@login_required
 def home():
-    # Gêneros e artistas favoritos do usuário
-    user_generos_ids = [ug.genero_id for ug in current_user.generos]
-    user_artistas_ids = [ua.artista_id for ua in current_user.artistas]
+    """
+    Página principal. Mostra a landing page para usuários deslogados
+    e a página de recomendações para usuários logados.
+    """
+    if current_user.is_authenticated:
+        # Lógica de recomendações (se estiver logado)
+        user_generos_ids = [ug.genero_id for ug in current_user.generos]
+        user_artistas_ids = [ua.artista_id for ua in current_user.artistas]
 
-    # Recomendação: músicas que combinem com o gosto do usuário
-    recomendacoes = Musica.query.filter(
-        (Musica.genero_id.in_(user_generos_ids)) |
-        (Musica.artista_id.in_(user_artistas_ids))
-    ).all()
+        recomendacoes = Musica.query.filter(
+            (Musica.genero_id.in_(user_generos_ids)) |
+            (Musica.artista_id.in_(user_artistas_ids))
+        ).all()
+        
+        return render_template("home.html", recomendacoes=recomendacoes)
+    
+    else:
+        # Apenas renderiza o 'else' do home.html (landing page)
+        return render_template("home.html")
 
-    return render_template("home.html", recomendacoes=recomendacoes)
+@app.route("/sobre")
+def sobre():
+    """Página 'Sobre'."""
+    return render_template("sobre.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        email = request.form["email"]
-        senha = request.form["senha"]
-
-        user = User.query.filter_by(email=email).first()
-
-        if user and check_password_hash(user.senha, senha):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+        
+    form = LoginForm() 
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        
+        if user and bcrypt.check_password_hash(user.senha, form.senha.data):
             login_user(user)
-            return redirect("/")
+            # Redireciona para a página de 'escolher_gostos' se for o primeiro login (sem gostos)
+            if not user.generos and not user.artistas:
+                 flash('Login com sucesso! Personalize seus gostos.', 'success')
+                 return redirect(url_for('escolher_gostos'))
+            return redirect(url_for('home'))
+        else:
+            flash('Login inválido. Verifique e-mail e senha.', 'danger') 
 
-    return render_template("login.html")
+    return render_template("login.html", form=form) 
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
-        nome = request.form["nome"]
-        email = request.form["email"]
-        senha = generate_password_hash(request.form["senha"])
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
 
-        novo_user = User(nome=nome, email=email, senha=senha)
+    form = RegisterForm() 
+    if form.validate_on_submit():
+        hashed_senha = bcrypt.generate_password_hash(form.senha.data).decode('utf-8')
+        
+        novo_user = User(nome=form.nome.data, email=form.email.data, senha=hashed_senha)
         db.session.add(novo_user)
         db.session.commit()
 
-        login_user(novo_user)
-        return redirect("/escolher-gostos")
+        login_user(novo_user) 
+        flash('Conta criada com sucesso! Agora, personalize seus gostos.', 'success')
+        return redirect(url_for('escolher_gostos')) 
 
-    return render_template("register.html")
+    return render_template("register.html", form=form) 
 
 
 @app.route("/escolher-gostos", methods=["GET", "POST"])
@@ -87,6 +89,7 @@ def escolher_gostos():
     artistas = Artista.query.all()
 
     if request.method == "POST":
+        # Limpa gostos antigos
         db.session.query(UserGenero).filter_by(usuario_id=current_user.id).delete()
         db.session.query(UserArtista).filter_by(usuario_id=current_user.id).delete()
 
@@ -97,7 +100,8 @@ def escolher_gostos():
             db.session.add(UserArtista(usuario_id=current_user.id, artista_id=artista_id))
 
         db.session.commit()
-        return redirect("/")
+        flash('Preferências salvas! Aproveite suas recomendações.', 'success')
+        return redirect(url_for('home')) 
 
     return render_template("escolher_gostos.html", generos=generos, artistas=artistas)
 
@@ -106,24 +110,22 @@ def escolher_gostos():
 @login_required
 def logout():
     logout_user()
-    return redirect("/login")
+    return redirect(url_for('home')) # Redireciona para a landing page
 
 
 # -------------------- ADMIN --------------------
 def admin_required():
-    if not current_user.is_admin:
-        return redirect("/")
-
+    if not current_user.is_authenticated or not current_user.is_admin:
+        flash('Acesso negado. Você precisa ser um administrador.', 'danger')
+        return redirect(url_for('home'))
 
 @app.route("/admin")
 @login_required
 def admin_dashboard():
-    admin_required()
-
+    admin_required() # Chama a função de verificação
     generos = Genero.query.all()
     artistas = Artista.query.all()
     musicas = Musica.query.all()
-
     return render_template("admin_dashboard.html", generos=generos, artistas=artistas, musicas=musicas)
 
 
@@ -134,7 +136,7 @@ def admin_add_genero():
     admin_required()
     db.session.add(Genero(nome=request.form["nome"]))
     db.session.commit()
-    return redirect("/admin")
+    return redirect(url_for('admin_dashboard'))
 
 
 @app.route("/admin/generos/edit/<int:id>", methods=["GET", "POST"])
@@ -145,7 +147,7 @@ def admin_edit_genero(id):
     if request.method == "POST":
         g.nome = request.form["nome"]
         db.session.commit()
-        return redirect("/admin")
+        return redirect(url_for('admin_dashboard'))
     return render_template("edit.html", tipo="Gênero", item=g)
 
 
@@ -155,7 +157,7 @@ def admin_del_genero(id):
     admin_required()
     db.session.delete(Genero.query.get(id))
     db.session.commit()
-    return redirect("/admin")
+    return redirect(url_for('admin_dashboard'))
 
 
 # ARTISTAS
@@ -165,7 +167,7 @@ def admin_add_artista():
     admin_required()
     db.session.add(Artista(nome=request.form["nome"]))
     db.session.commit()
-    return redirect("/admin")
+    return redirect(url_for('admin_dashboard'))
 
 
 @app.route("/admin/artistas/edit/<int:id>", methods=["GET", "POST"])
@@ -176,7 +178,7 @@ def admin_edit_artista(id):
     if request.method == "POST":
         a.nome = request.form["nome"]
         db.session.commit()
-        return redirect("/admin")
+        return redirect(url_for('admin_dashboard'))
     return render_template("edit.html", tipo="Artista", item=a)
 
 
@@ -186,7 +188,7 @@ def admin_del_artista(id):
     admin_required()
     db.session.delete(Artista.query.get(id))
     db.session.commit()
-    return redirect("/admin")
+    return redirect(url_for('admin_dashboard'))
 
 
 # MÚSICAS
@@ -201,7 +203,7 @@ def admin_add_musica():
     )
     db.session.add(nova)
     db.session.commit()
-    return redirect("/admin")
+    return redirect(url_for('admin_dashboard'))
 
 
 @app.route("/admin/musicas/edit/<int:id>", methods=["GET", "POST"])
@@ -217,7 +219,7 @@ def admin_edit_musica(id):
         m.artista_id = request.form["artista_id"]
         m.genero_id = request.form["genero_id"]
         db.session.commit()
-        return redirect("/admin")
+        return redirect(url_for('admin_dashboard'))
 
     return render_template("edit_musica.html", musica=m, generos=generos, artistas=artistas)
 
@@ -228,4 +230,4 @@ def admin_del_musica(id):
     admin_required()
     db.session.delete(Musica.query.get(id))
     db.session.commit()
-    return redirect("/admin")
+    return redirect(url_for('admin_dashboard'))

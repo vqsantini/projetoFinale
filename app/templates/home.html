@@ -1,13 +1,91 @@
 {% extends "base.html" %}
-{% block title %}Recomendações{% endblock %}
+
+{% block title %}
+    {% if current_user.is_authenticated %}
+        Recomendações
+    {% else %}
+        Início
+    {% endif %}
+{% endblock %}
+
+
 {% block content %}
+    
+    {% include "nav.html" %}
 
-<h2>Recomendações para você</h2>
+    {% if current_user.is_authenticated %}
+        
+        <main class="flex-grow flex flex-col">
+            <div class="max-w-4xl mx-auto w-full px-6 pt-16 pb-16">
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <div class="mb-4">
+                        {% for category, msg in messages %}
+                        <div class="px-4 py-3 rounded mb-2 
+                            {% if category == 'success' %}bg-green-200 text-green-900
+                            {% elif category == 'danger' %}bg-red-200 text-red-900
+                            {% else %}bg-blue-200 text-blue-900
+                            {% endif %}">
+                            {{ msg }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
 
-<ul>
-{% for musica in recomendacoes %}
-    <li>{{ musica.titulo }} — {{ musica.artista.nome }}</li>
-{% endfor %}
-</ul>
+                <h1 class="text-4xl font-bold mb-2">Recomendações para você</h1>
+                <p class="text-lg text-gray-400 mb-12">Músicas selecionadas com base no seu gosto</p>
+
+                <div class="space-y-2">
+                    {% if recomendacoes %}
+                        {% for musica in recomendacoes %}
+                        <div class="flex items-center justify-between p-4 bg-neutral-800 rounded-lg hover:bg-neutral-700 transition-colors">
+                            <div class="flex items-center gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-400">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+                                </svg>
+                                <div>
+                                    <p class="text-base font-semibold text-white">{{ musica.titulo }}</p>
+                                    <p class="text-sm text-gray-400">{{ musica.artista.nome }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-5">
+                                </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="p-4 bg-neutral-800 rounded-lg text-center text-gray-400">
+                            <p>Nenhuma recomendação encontrada.</p>
+                            <p class="mt-2">Vá para <a href="{{ url_for('escolher_gostos') }}" class="text-purple-400 hover:underline">"Editar Gostos"</a> para adicionar suas preferências.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </main>
+
+    {% else %}
+
+        <main class="flex-grow flex flex-col items-center justify-center text-center px-6 -mt-16">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-24 h-24 text-purple-500 mb-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+            </svg>
+
+            <h1 class="text-5xl font-bold mb-4 max-w-2xl">Descubra músicas que combinam com você</h1>
+            <p class="text-lg text-gray-400 mb-8 max-w-lg">Rufictor Albutini recomenda canções com base no seu gosto musical.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="{{ url_for('register') }}" class="bg-purple-500 text-white font-semibold px-8 py-3 rounded-full hover:bg-purple-600 transition-colors">
+                    Comece Agora
+                </a>
+                <a href="{{ url_for('sobre') }}" class="bg-neutral-700 text-white font-semibold px-8 py-3 rounded-full hover:bg-neutral-600 transition-colors">
+                    Saiba Mais
+                </a>
+            </div>
+        </main>
+        
+    {% endif %}
+
+    {% include "footer.html" %}
 
 {% endblock %}

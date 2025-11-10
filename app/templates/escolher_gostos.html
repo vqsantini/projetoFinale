@@ -1,25 +1,78 @@
 {% extends "base.html" %}
-{% block title %}Escolher Gostos{% endblock %}
+{% block title %}Personalizar Experiência{% endblock %}
+
 {% block content %}
 
-<h2>Escolha seus gostos musicais</h2>
+    {% include "nav.html" %}
 
-<form method="POST">
-    <label>Gêneros favoritos:</label>
-    <select name="generos" multiple>
-        {% for g in generos %}
-            <option value="{{ g.id }}">{{ g.nome }}</option>
-        {% endfor %}
-    </select>
+    <main class="flex-grow flex flex-col items-center justify-center px-6 pt-16 pb-16">
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="mb-4 max-w-2xl w-full">
+                {% for category, msg in messages %}
+                <div class="px-4 py-3 rounded mb-2 
+                    {% if category == 'success' %}bg-green-200 text-green-900
+                    {% else %}bg-blue-200 text-blue-900
+                    {% endif %}">
+                    {{ msg }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
 
-    <label>Artistas favoritos:</label>
-    <select name="artistas" multiple>
-        {% for a in artistas %}
-            <option value="{{ a.id }}">{{ a.nome }}</option>
-        {% endfor %}
-    </select>
+        <h1 class="text-4xl font-bold mb-2 text-center">Personalize sua experiência</h1>
+        <p class="text-lg text-gray-400 mb-8 text-center">Escolha seus gostos para ótimas recomendações.</p>
 
-    <button type="submit">Salvar Preferências</button>
-</form>
+        <div class="bg-neutral-800 rounded-lg p-8 max-w-2xl w-full shadow-lg">
+            <form method="POST" action="{{ url_for('escolher_gostos') }}">
+                
+                <div class="mb-6">
+                    <label class="block text-lg font-medium text-white mb-4">
+                        Quais gêneros você curte?
+                    </label>
+                    <div class="flex flex-wrap gap-3">
+                        {% for genero in generos %}
+                        <label class="cursor-pointer">
+                            <input type="checkbox" name="generos" value="{{ genero.id }}" class="hidden peer">
+                            <span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors">
+                                {{ genero.nome }}
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <label class="block text-lg font-medium text-white mb-4">
+                        Quais artistas você curte?
+                    </label>
+                    <div class="flex flex-wrap gap-3">
+                        {% for artista in artistas %}
+                        <label class="cursor-pointer">
+                            <input type="checkbox" name="artistas" value="{{ artista.id }}" class="hidden peer">
+                            <span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors">
+                                {{ artista.nome }}
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-4">
+                    <button type="submit" class="w-full bg-purple-500 text-white font-semibold py-3 rounded-lg hover:bg-purple-600 transition-colors">
+                        Salvar Preferências
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include "footer.html" %}
 
 {% endblock %}

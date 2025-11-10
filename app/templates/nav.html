@@ -1,0 +1,73 @@
+{% if current_user.is_authenticated %}
+    <header class="sticky top-0 bg-neutral-900/80 backdrop-blur-sm w-full p-6 flex justify-between items-center z-10 border-b border-neutral-800">
+        <div class="flex items-center gap-8">
+            <a href="{{ url_for('home') }}" class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+                </svg>
+                <span class="text-xl font-bold hidden sm:block">Rufictor Albutini</span>
+            </a>
+            </div>
+        <div class="flex items-center gap-6">
+            <nav class="hidden md:flex items-center gap-6">
+                <a href="{{ url_for('home') }}" class="text-white font-medium border-b-2 border-purple-500 pb-1">Recomendações</a>
+                <a href="{{ url_for('escolher_gostos') }}" class="text-gray-400 hover:text-white transition-colors">Editar Gostos</a>
+                <a href="{{ url_for('sobre') }}" class="text-gray-400 hover:text-white transition-colors">Sobre</a>
+                {% if current_user.is_admin %}
+                    <a href="{{ url_for('admin_dashboard') }}" class="text-yellow-400 hover:text-white transition-colors">Admin</a>
+                {% endif %}
+            </nav>
+            <div class="flex items-center gap-4">
+                <span class="text-gray-300 hidden lg:block">Olá, {{ current_user.nome }}!</span>
+                <a href="{{ url_for('logout') }}" class="text-gray-400 font-medium hover:text-white text-sm">Sair</a>
+            </div>
+        </div>
+    </header>
+
+{% else %}
+    {% if request.endpoint == 'home' or request.endpoint == 'sobre' %}
+    <header class="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-10">
+        <a href="{{ url_for('home') }}" class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+            </svg>
+            <span class="text-xl font-bold">Rufictor Albutini</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6">
+            <a href="{{ url_for('home') }}" class="text-white font-medium {% if request.endpoint == 'home' %}border-b-2 border-purple-500 pb-1{% else %}text-gray-400 hover:text-white{% endif %}">Início</a>
+            <a href="{{ url_for('sobre') }}" class="text-white font-medium {% if request.endpoint == 'sobre' %}border-b-2 border-purple-500 pb-1{% else %}text-gray-400 hover:text-white{% endif %}">Sobre</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <a href="{{ url_for('login') }}" class="text-white font-medium hover:text-gray-300">Entrar</a>
+            <a href="{{ url_for('register') }}" class="bg-purple-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-purple-600 transition-colors">
+                Cadastrar-se
+            </a>
+        </div>
+    </header>
+
+    {% elif request.endpoint == 'login' or request.endpoint == 'register' %}
+    <header class="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-10">
+        <a href="{{ url_for('home') }}" class="flex items-center gap-2"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+            </svg>
+            <span class="text-xl font-bold">Rufictor Albutini</span>
+        </a>
+        
+        {% if request.endpoint == 'login' %}
+            <div class="flex items-center gap-4">
+                <span class="text-gray-400">Ainda não tem conta?</span>
+                <a href="{{ url_for('register') }}" class="bg-purple-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-purple-600 transition-colors">
+                    Cadastrar-se
+                </a>
+            </div>
+        {% elif request.endpoint == 'register' %}
+            <div class="flex items-center gap-4">
+                <span class="text-gray-400">Já tem uma conta?</span>
+                <a href="{{ url_for('login') }}" class="bg-purple-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-purple-600 transition-colors">
+                    Entrar
+                </a>
+            </div>
+        {% endif %}
+    </header>
+    {% endif %}
+{% endif %}

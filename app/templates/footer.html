@@ -1,0 +1,24 @@
+<footer class="w-full border-t border-neutral-700 mt-20 px-6 py-12">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+            <a href="{{ url_for('home') }}" class="flex items-center gap-2 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+                </svg>
+                <span class="text-xl font-bold">Rufictor Albutini</span>
+            </a>
+            <p class="text-gray-400 text-sm">Descubra músicas que combinam com você. Recomendações personalizadas baseadas no seu gosto musical.</p>
+        </div>
+        
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Links</h3>
+            <ul class="space-y-2">
+                <li><a href="{{ url_for('home') }}" class="text-gray-400 hover:text-white">Início</a></li>
+                <li><a href="{{ url_for('sobre') }}" class="text-gray-400 hover:text-white">Sobre</a></li>
+            </ul>
+        </div>
+        </div>
+    <div class="text-center text-gray-500 mt-10 pt-10 border-t border-neutral-700">
+        &copy; 2025 Rufictor Albutini – Todos os direitos reservados.
+    </div>
+</footer>

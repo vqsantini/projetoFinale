@@ -1,32 +1,23 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
 from flask_migrate import Migrate
 from dotenv import load_dotenv
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 import os
 
-load_dotenv()
+load_dotenv('.env')
 
-db = SQLAlchemy()
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = os.getenv("FLASK_SECRET_KEY", "dev")
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///musics.db")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'chave_fallback')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///musics.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db.init_app(app)
-
-# 🔥 esta linha é ESSENCIAL
+db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+bcrypt = Bcrypt(app)
 
-from .models import User, Genero, Artista, Musica, UserGenero, UserArtista
-
-login_manager = LoginManager()
-login_manager.login_view = "login"
-login_manager.init_app(app)
-
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
-
-from .views import *
+from app import views, models

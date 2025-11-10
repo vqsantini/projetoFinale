@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Sobre{% endblock %}
+
+{% block content %}
+
+    {% include "nav.html" %}
+
+    <main class="flex-grow flex flex-col items-center justify-center px-6 pt-32 pb-16">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-purple-500 mb-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+        </svg>
+
+        <h1 class="text-4xl font-bold mb-2 text-center">Sobre o Rufictor Albutini</h1>
+        <p class="text-lg text-gray-400 mb-12 text-center">Uma plataforma de recomendação musical personalizada</p>
+
+        <div class="bg-neutral-800 rounded-lg p-8 max-w-2xl w-full shadow-lg">
+            <h2 class="text-2xl font-semibold mb-3">O que fazemos</h2>
+            <p class="text-gray-300 mb-6">
+                O Rufictor Albutini é uma plataforma que recomenda músicas com base no seu gosto musical. Utilizamos um sistema de recomendações para ajudá-lo a descobrir novas canções e artistas.
+            </p>
+
+            <h2 class="text-2xl font-semibold mb-3">Como funciona</h2>
+            <p class="text-gray-300 mb-8">
+                Ao criar sua conta e informar suas preferências musicais, nosso sistema gera recomendações personalizadas. Você pode curtir ou rejeitar as sugestões para melhorar ainda mais as próximas recomendações.
+            </p>
+
+            <a href="{{ url_for('register') }}" class="w-full block text-center bg-purple-500 text-white font-semibold py-3 rounded-lg hover:bg-purple-600 transition-colors">
+                Começar Agora
+            </a>
+        </div>
+    </main>
+
+    {% include "footer.html" %}
+
+{% endblock %}
