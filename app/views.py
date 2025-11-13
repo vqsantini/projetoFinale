@@ -10,17 +10,12 @@ from app.forms import LoginForm, RegisterForm
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# --- Rotas Principais e 'Sobre' ---
-
 @app.route("/")
 def home():
     if current_user.is_authenticated:
         user_generos_ids = [ug.genero_id for ug in current_user.generos]
         user_artistas_ids = [ua.artista_id for ua in current_user.artistas]
-
-        # --- LÓGICA DE RECOMENDAÇÃO (ATUALIZADA) ---
         recomendacoes = Musica.query.filter(
-            # Verifica se a música tem QUALQUER gênero que está na lista de IDs do usuário
             Musica.generos.any(Genero.id.in_(user_generos_ids)) |
             (Musica.artista_id.in_(user_artistas_ids))
         ).all()
@@ -29,8 +24,6 @@ def home():
     
     else:
         return render_template("home.html")
-
-# (As rotas /sobre, /login, /register, /logout não mudam)
 @app.route("/sobre")
 def sobre():
     return render_template("sobre.html")
@@ -80,7 +73,6 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-# (As rotas /escolher-gostos, /perfil, /perfil/excluir não mudam)
 @app.route("/escolher-gostos", methods=["GET", "POST"])
 @login_required
 def escolher_gostos():
@@ -144,7 +136,34 @@ def excluir_conta():
     flash('Sua conta foi excluída permanentemente.', 'success')
     return redirect(url_for('home'))
 
-# -------------------- ADMIN --------------------
+@app.route("/api/artistas/search")
+@login_required
+def api_search_artistas():
+    query = request.args.get('q', '').strip()
+    
+    if query and len(query) >= 2:
+        artistas = Artista.query.filter(
+            Artista.nome.ilike(f'%{query}%')
+        ).limit(5).all()
+        
+        return jsonify([artista.nome for artista in artistas])
+        
+    elif not query:
+        artistas_populares = db.session.query(
+                Artista, 
+                func.count(UserArtista.artista_id).label('total_favoritos')
+            ) \
+            .join(UserArtista, Artista.id == UserArtista.artista_id) \
+            .group_by(Artista.id) \
+            .order_by(func.count(UserArtista.artista_id).desc()) \
+            .limit(10) \
+            .all()
+        nomes_artistas = [artista[0].nome for artista in artistas_populares]
+        return jsonify(nomes_artistas)
+
+    else:
+        return jsonify([])
+
 def admin_required():
     if not current_user.is_authenticated or not current_user.is_admin:
         flash('Acesso negado. Você precisa ser um administrador.', 'danger')
@@ -159,7 +178,6 @@ def admin_dashboard():
     musicas = Musica.query.all()
     return render_template("admin_dashboard.html", generos=generos, artistas=artistas, musicas=musicas)
 
-# (Rotas de Admin Gênero e Artista não mudam)
 @app.route("/admin/generos", methods=["POST"])
 @login_required
 def admin_add_genero():
@@ -214,14 +232,10 @@ def admin_del_artista(id):
     db.session.commit()
     return redirect(url_for('admin_dashboard'))
 
-
-# --- MÚSICAS (ROTAS ATUALIZADAS) ---
 @app.route("/admin/musicas", methods=["POST"])
 @login_required
 def admin_add_musica():
     admin_required()
-    
-    # Pega a lista de IDs de gêneros do form
     genero_ids = request.form.getlist("genero_ids")
     generos = Genero.query.filter(Genero.id.in_(genero_ids)).all()
     
@@ -229,8 +243,6 @@ def admin_add_musica():
         titulo=request.form["titulo"],
         artista_id=request.form["artista_id"]
     )
-    
-    # Adiciona os gêneros selecionados à música
     nova.generos.extend(generos)
     
     db.session.add(nova)
@@ -249,18 +261,14 @@ def admin_edit_musica(id):
     if request.method == "POST":
         m.titulo = request.form["titulo"]
         m.artista_id = request.form["artista_id"]
-        
-        # Atualiza a lista de gêneros
         genero_ids = request.form.getlist("genero_ids")
         generos_selecionados = Genero.query.filter(Genero.id.in_(genero_ids)).all()
         
-        m.generos.clear() # Limpa os gêneros antigos
-        m.generos.extend(generos_selecionados) # Adiciona os novos
+        m.generos.clear()
+        m.generos.extend(generos_selecionados)
         
         db.session.commit()
         return redirect(url_for('admin_dashboard'))
-
-    # (GET) Envia os IDs dos gêneros que esta música já possui
     generos_selecionados_ids = [g.id for g in m.generos]
 
     return render_template(

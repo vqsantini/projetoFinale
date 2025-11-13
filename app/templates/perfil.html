@@ -2,7 +2,6 @@
 {% block title %}Meu Perfil{% endblock %}
 
 {% block content %}
-
     {% include "nav.html" %}
 
     <main class="flex-grow flex flex-col items-center pt-16 pb-16">
@@ -25,13 +24,9 @@
                 </div>
                 {% endif %}
             {% endwith %}
-
+            
             <div class="bg-neutral-800 rounded-lg p-8 w-full shadow-lg mb-8">
-                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.875 1.875 0 0117.625 22.5H6.375a1.875 1.875 0 01-1.875-2.382z" /></svg>
-                    Informações Pessoais
-                </h2>
-                
+                <h2 class="text-2xl font-semibold mb-6">Informações Pessoais</h2>
                 <div class="mb-4">
                     <label for="nome" class="block text-sm font-medium text-gray-300 mb-2">Nome Completo</label>
                     <input type="text" id="nome" value="{{ current_user.nome }}" 
@@ -44,12 +39,9 @@
                 </div>
             </div>
 
-            <form method="POST" action="{{ url_for('perfil') }}">
+            <form id="form-perfil" method="POST" action="{{ url_for('perfil') }}">
                 <div class="bg-neutral-800 rounded-lg p-8 w-full shadow-lg mb-8">
-                    <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /></svg>
-                        Preferências Musicais
-                    </h2>
+                    <h2 class="text-2xl font-semibold mb-6">Preferências Musicais</h2>
                     
                     <div class="mb-6">
                         <label class="block text-base font-medium text-gray-300 mb-4">Gêneros Favoritos</label>
@@ -68,11 +60,23 @@
                         </div>
                     </div>
 
-                    <div class="mb-6">
-                        <label for="artistas-perfil" class="block text-base font-medium text-gray-300 mb-2">Artistas Favoritos</label>
-                        <input type="text" id="artistas-perfil" name="artistas" value="{{ artistas_selecionados }}"
-                               placeholder="Separe os nomes dos artistas por vírgula" 
-                               class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-500">
+                    <div class="mb-8">
+                        <label for="artista-search-input" class="block text-lg font-medium text-white mb-2">
+                            Artistas favoritos
+                        </label>
+                        <p class="text-sm text-gray-400 mb-4">Busque (ou digite e pressione Enter) para adicionar artistas.</p>
+
+                        <div id="artista-pills-container" class="flex flex-wrap gap-2 mb-3"></div>
+
+                        <div class="relative">
+                            <input type="text" id="artista-search-input" 
+                                   placeholder="Digite o nome de um artista..." 
+                                   class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-500">
+                            
+                            <div id="artista-search-results" class="absolute z-10 w-full mt-1 bg-neutral-700 rounded-b-lg shadow-lg overflow-hidden hidden"></div>
+                        </div>
+
+                        <input type="hidden" id="artistas-hidden-input" name="artistas" value="{{ artistas_selecionados }}">
                     </div>
                     
                     <button type="submit" class="bg-purple-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-purple-600 transition-colors">
@@ -94,5 +98,118 @@
     </main>
 
     {% include "footer.html" %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formPerfil = document.getElementById('form-perfil');
+            const searchInput = document.getElementById('artista-search-input');
+            const searchResults = document.getElementById('artista-search-results');
+            const pillsContainer = document.getElementById('artista-pills-container');
+            const hiddenInput = document.getElementById('artistas-hidden-input');
+            
+            let artistasSelecionados = new Set(
+                hiddenInput.value.split(',')
+                                .map(s => s.trim())
+                                .filter(Boolean)
+            );
+
+            function renderPills() {
+                pillsContainer.innerHTML = '';
+                artistasSelecionados.forEach(nome => {
+                    if (!nome) return;
+                    const pill = document.createElement('span');
+                    pill.className = 'px-4 py-2 bg-purple-500 text-white rounded-full text-sm font-medium flex items-center gap-2';
+                    pill.textContent = nome;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.className = 'font-bold text-lg leading-none';
+                    removeBtn.onclick = () => {
+                        artistasSelecionados.delete(nome);
+                        updateHiddenInput();
+                        renderPills();
+                    };
+                    
+                    pill.appendChild(removeBtn);
+                    pillsContainer.appendChild(pill);
+                });
+            }
+
+            function updateHiddenInput() {
+                hiddenInput.value = Array.from(artistasSelecionados).join(', ');
+            }
+
+            function addArtistaPeloTexto(nome) {
+                const nomeLimpo = nome.trim();
+                if (nomeLimpo.length > 1) {
+                    artistasSelecionados.add(nomeLimpo);
+                    updateHiddenInput();
+                    renderPills();
+                    searchInput.value = '';
+                    searchResults.innerHTML = '';
+                    searchResults.classList.add('hidden');
+                }
+            }
+
+            async function fetchSuggestions(query = "") {
+                const response = await fetch(`/api/artistas/search?q=${encodeURIComponent(query)}`);
+                const nomes = await response.json();
+                
+                searchResults.innerHTML = '';
+                if (nomes.length > 0) {
+                    searchResults.classList.remove('hidden');
+                    
+                    if (!query) {
+                        const title = document.createElement('div');
+                        title.className = 'px-4 py-2 text-sm text-gray-400 font-semibold';
+                        title.textContent = 'Artistas Populares';
+                        searchResults.appendChild(title);
+                    }
+                    
+                    nomes.forEach(nome => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'px-4 py-3 hover:bg-neutral-600 cursor-pointer';
+                        resultItem.textContent = nome;
+                        
+                        resultItem.onclick = () => {
+                            addArtistaPeloTexto(nome);
+                        };
+                        
+                        searchResults.appendChild(resultItem);
+                    });
+                } else {
+                    searchResults.classList.add('hidden');
+                }
+            }
+
+            formPerfil.addEventListener('submit', function(event) {
+                addArtistaPeloTexto(searchInput.value);
+            });
+
+            searchInput.addEventListener('keyup', async (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addArtistaPeloTexto(e.target.value);
+                    return;
+                }
+                fetchSuggestions(e.target.value);
+            });
+            
+            searchInput.addEventListener('focusin', () => {
+                if (searchInput.value.trim() === '') {
+                    fetchSuggestions();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (searchInput && searchResults && !searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.add('hidden');
+                }
+            });
+            
+            renderPills();
+        });
+    </script>
 
 {% endblock %}

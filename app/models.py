@@ -1,8 +1,6 @@
 from app import db
 from flask_login import UserMixin
 
-# --- Tabela de Associação (NOVO) ---
-# Esta tabela liga Músicas e Gêneros
 musica_genero = db.Table('musica_genero',
     db.Column('musica_id', db.Integer, db.ForeignKey('musica.id'), primary_key=True),
     db.Column('genero_id', db.Integer, db.ForeignKey('genero.id'), primary_key=True)
@@ -22,9 +20,6 @@ class User(db.Model, UserMixin):
 class Genero(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), unique=True, nullable=False)
-    
-    # --- RELACIONAMENTO (NOVO) ---
-    # Define a relação M-M (Many-to-Many) com Musica
     musicas = db.relationship('Musica', secondary=musica_genero,
                               back_populates='generos')
 
@@ -39,12 +34,6 @@ class Musica(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(150), nullable=False)
     artista_id = db.Column(db.Integer, db.ForeignKey("artista.id"), nullable=False)
-    
-    # --- COLUNA REMOVIDA ---
-    # genero_id = db.Column(db.Integer, db.ForeignKey("genero.id")) # (REMOVIDO)
-
-    # --- RELACIONAMENTO (NOVO) ---
-    # Define a relação M-M (Many-to-Many) com Genero
     generos = db.relationship('Genero', secondary=musica_genero,
                               back_populates='musicas')
 

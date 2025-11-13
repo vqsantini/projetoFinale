@@ -51,14 +51,22 @@
                 </div>
 
                 <div class="mb-8">
-                    <label for="artistas" class="block text-lg font-medium text-white mb-2">
+                    <label for="artista-search-input" class="block text-lg font-medium text-white mb-2">
                         Artistas favoritos
-                        <span class="text-sm text-gray-400 font-normal">(separados por vírgula)</span>
                     </label>
-                    <input type="text" id="artistas" name="artistas" value="{{ artistas_selecionados }}"
-                           placeholder="Ex: Radiohead, Kendrick Lamar, Djavan" 
-                           class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-500">
-                    <p class="text-xs text-gray-400 mt-2">Isso nos ajuda a fazer melhores recomendações.</p>
+                    <p class="text-sm text-gray-400 mb-4">Busque (ou digite e pressione Enter) para adicionar artistas.</p>
+
+                    <div id="artista-pills-container" class="flex flex-wrap gap-2 mb-3"></div>
+
+                    <div class="relative">
+                        <input type="text" id="artista-search-input" 
+                               placeholder="Digite o nome de um artista..." 
+                               class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-500">
+                        
+                        <div id="artista-search-results" class="absolute z-10 w-full mt-1 bg-neutral-700 rounded-b-lg shadow-lg overflow-hidden hidden"></div>
+                    </div>
+
+                    <input type="hidden" id="artistas-hidden-input" name="artistas" value="{{ artistas_selecionados }}">
                 </div>
 
                 <div class="flex justify-end gap-4">
@@ -74,37 +82,129 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('form-gostos');
+            const formGostos = document.getElementById('form-gostos');
             const checkboxes = document.querySelectorAll('.genero-checkbox');
             const contadorEl = document.getElementById('contador-generos');
             const erroEl = document.getElementById('erro-generos');
             const minGeneros = 3;
 
-            function atualizarContagem() {
+            function atualizarContagemGeneros() {
                 const selecionados = document.querySelectorAll('.genero-checkbox:checked').length;
                 contadorEl.textContent = `${selecionados} selecionados`;
-                
-                if (selecionados >= minGeneros) {
-                    erroEl.classList.add('hidden');
+                if (selecionados >= minGeneros) erroEl.classList.add('hidden');
+            }
+            atualizarContagemGeneros();
+            checkboxes.forEach(cb => cb.addEventListener('change', atualizarContagemGeneros));
+            
+            const searchInput = document.getElementById('artista-search-input');
+            const searchResults = document.getElementById('artista-search-results');
+            const pillsContainer = document.getElementById('artista-pills-container');
+            const hiddenInput = document.getElementById('artistas-hidden-input');
+            
+            let artistasSelecionados = new Set(
+                hiddenInput.value.split(',')
+                                .map(s => s.trim())
+                                .filter(Boolean)
+            );
+
+            function renderPills() {
+                pillsContainer.innerHTML = '';
+                artistasSelecionados.forEach(nome => {
+                    if (!nome) return;
+                    const pill = document.createElement('span');
+                    pill.className = 'px-4 py-2 bg-purple-500 text-white rounded-full text-sm font-medium flex items-center gap-2';
+                    pill.textContent = nome;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.className = 'font-bold text-lg leading-none';
+                    removeBtn.onclick = () => {
+                        artistasSelecionados.delete(nome);
+                        updateHiddenInput();
+                        renderPills();
+                    };
+                    
+                    pill.appendChild(removeBtn);
+                    pillsContainer.appendChild(pill);
+                });
+            }
+
+            function updateHiddenInput() {
+                hiddenInput.value = Array.from(artistasSelecionados).join(', ');
+            }
+
+            function addArtistaPeloTexto(nome) {
+                const nomeLimpo = nome.trim();
+                if (nomeLimpo.length > 1) {
+                    artistasSelecionados.add(nomeLimpo);
+                    updateHiddenInput();
+                    renderPills();
+                    searchInput.value = '';
+                    searchResults.innerHTML = '';
+                    searchResults.classList.add('hidden');
                 }
             }
 
-            // Atualiza na carga da página
-            atualizarContagem();
-
-            // Atualiza a cada clique
-            checkboxes.forEach(cb => {
-                cb.addEventListener('change', atualizarContagem);
-            });
-
-            // Valida no envio
-            form.addEventListener('submit', function(event) {
-                const selecionados = document.querySelectorAll('.genero-checkbox:checked').length;
-                if (selecionados < minGeneros) {
-                    event.preventDefault(); // Impede o envio do formulário
+            async function fetchSuggestions(query = "") {
+                const response = await fetch(`/api/artistas/search?q=${encodeURIComponent(query)}`);
+                const nomes = await response.json();
+                
+                searchResults.innerHTML = '';
+                if (nomes.length > 0) {
+                    searchResults.classList.remove('hidden');
+                    if (!query) {
+                        const title = document.createElement('div');
+                        title.className = 'px-4 py-2 text-sm text-gray-400 font-semibold';
+                        title.textContent = 'Artistas Populares';
+                        searchResults.appendChild(title);
+                    }
+                    
+                    nomes.forEach(nome => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'px-4 py-3 hover:bg-neutral-600 cursor-pointer';
+                        resultItem.textContent = nome;
+                        
+                        resultItem.onclick = () => {
+                            addArtistaPeloTexto(nome);
+                        };
+                        
+                        searchResults.appendChild(resultItem);
+                    });
+                } else {
+                    searchResults.classList.add('hidden');
+                }
+            }
+            formGostos.addEventListener('submit', function(event) {
+                if (document.querySelectorAll('.genero-checkbox:checked').length < minGeneros) {
+                    event.preventDefault();
                     erroEl.classList.remove('hidden');
                 }
+                addArtistaPeloTexto(searchInput.value);
             });
+
+            searchInput.addEventListener('keyup', async (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addArtistaPeloTexto(e.target.value);
+                    return;
+                }
+                fetchSuggestions(e.target.value);
+            });
+            
+            searchInput.addEventListener('focusin', () => {
+                if (searchInput.value.trim() === '') {
+                    fetchSuggestions();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.add('hidden');
+                }
+            });
+
+            renderPills();
         });
     </script>
 
