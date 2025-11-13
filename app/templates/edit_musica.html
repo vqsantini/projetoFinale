@@ -12,42 +12,9 @@
             <div class="bg-neutral-800 p-8 rounded-lg shadow-lg">
                 <form method="POST" action=""> <div class="mb-4">
                         <label for="titulo" class="block text-sm font-medium text-gray-300 mb-2">Título</label>
-                        <input type="text" name="titulo" value="{{ musica.titulo }}" class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                        <input type="text" name="titulo" value="{{ musica.titulo }}" class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg" required>
                     </div>
 
                     <div class="mb-4">
-                        <label for="artista_id" class="block text-sm font-medium text-gray-300 mb-2">Artista</dlabel>
+                        <label for="artista_id" class="block text-sm font-medium text-gray-300 mb-2">Artista</label>
                         <select name="artista_id" class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg" required>
-                            {% for a in artistas %}
-                            <option value="{{ a.id }}" {% if a.id == musica.artista_id %}selected{% endif %}>
-                                {{ a.nome }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="mb-6">
-                        <label for="genero_id" class="block text-sm font-medium text-gray-300 mb-2">Gênero</label>
-                        <select name="genero_id" class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg" required>
-                            {% for g in generos %}
-                            <option value="{{ g.id }}" {% if g.id == musica.genero_id %}selected{% endif %}>
-                                {{ g.nome }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    
-                    <div class="flex items-center justify-between mt-6">
-                        <a href="{{ url_for('admin_dashboard') }}" class="text-gray-400 hover:text-white">Cancelar</a>
-                        <button type="submit" class="bg-purple-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-purple-600">
-                            Salvar Alterações
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </main>
-
-    {% include "footer.html" %}
-
-{% endblock %}

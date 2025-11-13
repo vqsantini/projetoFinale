@@ -5,7 +5,7 @@
 
     {% include "nav.html" %}
 
-    <main class="flex-grow flex flex-col">
+    <main class.="flex-grow flex flex-col">
         <div class="max-w-6xl mx-auto w-full px-6 pt-16 pb-16">
             <h1 class="text-4xl font-bold mb-12">Painel de Administração</h1>
 
@@ -51,22 +51,32 @@
 
                 <div class="bg-neutral-800 p-6 rounded-lg shadow-lg">
                     <h2 class="text-2xl font-semibold mb-4">Músicas</h2>
+                    
                     <form method="POST" action="{{ url_for('admin_add_musica') }}" class="mb-6 space-y-2">
                         <input type="text" name="titulo" placeholder="Título da Música" class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg" required>
+                        
                         <select name="artista_id" class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg" required>
                             <option value="">Selecione o Artista</option>
                             {% for a in artistas %}<option value="{{ a.id }}">{{ a.nome }}</option>{% endfor %}
                         </select>
-                        <select name="genero_id" class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg" required>
-                            <option value="">Selecione o Gênero</option>
+                        
+                        <label class="block text-sm text-gray-400 pt-2">Gêneros (Segure Ctrl/Cmd para selecionar vários):</label>
+                        <select name="genero_ids" multiple class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg h-32" required>
                             {% for g in generos %}<option value="{{ g.id }}">{{ g.nome }}</option>{% endfor %}
                         </select>
-                        <button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 rounded-lg hover:bg-purple-600">Adicionar</button>
+                        
+                        <button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 rounded-lg hover:bg-purple-600 pt-2">Adicionar</button>
                     </form>
+                    
                     <ul class="space-y-2 max-h-96 overflow-y-auto">
                         {% for m in musicas %}
                         <li class="flex justify-between items-center p-2 bg-neutral-700 rounded">
-                            <span>{{ m.titulo }} <em class="text-sm text-gray-400">- {{ m.artista.nome }}</em></span>
+                            <div>
+                                <p>{{ m.titulo }} <em class="text-sm text-gray-400">- {{ m.artista.nome }}</em></p>
+                                <p class="text-xs text-gray-300">
+                                    {% for g in m.generos %}{{ g.nome }}{% if not loop.last %}, {% endif %}{% endfor %}
+                                </p>
+                            </div>
                             <div>
                                 <a href="{{ url_for('admin_edit_musica', id=m.id) }}" class="text-blue-400 text-sm mr-2">Editar</a>
                                 <a href="{{ url_for('admin_del_musica', id=m.id) }}" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')">Excluir</a>

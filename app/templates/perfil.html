@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+
+    {% include "nav.html" %}
+
+    <main class="flex-grow flex flex-col items-center pt-16 pb-16">
+        <div class="max-w-3xl w-full px-6">
+            
+            <h1 class="text-4xl font-bold mb-2">Meu Perfil</h1>
+            <p class="text-lg text-gray-400 mb-12">Gerencie suas informações e preferências</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="mb-4 w-full">
+                    {% for category, msg in messages %}
+                    <div class="px-4 py-3 rounded mb-2 
+                        {% if category == 'success' %}bg-green-200 text-green-900
+                        {% else %}bg-blue-200 text-blue-900
+                        {% endif %}">
+                        {{ msg }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="bg-neutral-800 rounded-lg p-8 w-full shadow-lg mb-8">
+                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.875 1.875 0 0117.625 22.5H6.375a1.875 1.875 0 01-1.875-2.382z" /></svg>
+                    Informações Pessoais
+                </h2>
+                
+                <div class="mb-4">
+                    <label for="nome" class="block text-sm font-medium text-gray-300 mb-2">Nome Completo</label>
+                    <input type="text" id="nome" value="{{ current_user.nome }}" 
+                           class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-400 cursor-not-allowed" disabled>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">E-mail</label>
+                    <input type="email" id="email" value="{{ current_user.email }}" 
+                           class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-400 cursor-not-allowed" disabled>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ url_for('perfil') }}">
+                <div class="bg-neutral-800 rounded-lg p-8 w-full shadow-lg mb-8">
+                    <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /></svg>
+                        Preferências Musicais
+                    </h2>
+                    
+                    <div class="mb-6">
+                        <label class="block text-base font-medium text-gray-300 mb-4">Gêneros Favoritos</label>
+                        <div class="flex flex-wrap gap-3">
+                            {% for genero in generos %}
+                            <label class="cursor-pointer">
+                                <input type="checkbox" name="generos" value="{{ genero.id }}" class="hidden peer"
+                                    {% if genero.id in generos_selecionados_ids %}checked{% endif %}>
+                                <span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                            peer-checked:bg-purple-500 peer-checked:text-white
+                                            hover:bg-neutral-600 transition-colors">
+                                    {{ genero.nome }}
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="artistas-perfil" class="block text-base font-medium text-gray-300 mb-2">Artistas Favoritos</label>
+                        <input type="text" id="artistas-perfil" name="artistas" value="{{ artistas_selecionados }}"
+                               placeholder="Separe os nomes dos artistas por vírgula" 
+                               class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-500">
+                    </div>
+                    
+                    <button type="submit" class="bg-purple-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-purple-600 transition-colors">
+                        Salvar Alterações
+                    </button>
+                </div>
+            </form>
+
+            <div class="bg-red-900/20 border border-red-500 rounded-lg p-8 w-full shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4 text-red-400">Zona de Perigo</h2>
+                <p class="text-red-300 mb-6">Ações irreversíveis que afetam permanentemente sua conta.</p>
+                <form method="POST" action="{{ url_for('excluir_conta') }}" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.');">
+                    <button type="submit" class="bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 transition-colors">
+                        Excluir Conta
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    {% include "footer.html" %}
+
+{% endblock %}
