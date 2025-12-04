@@ -1,209 +1,2058 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-12-03T19:30:34.477558" rpa="false" schemaversion="5">
-<suite id="s1" name="Teste Login" source="C:\Users\Windows 11\victorCodes\projetoFinale\teste_login.robot">
-<test id="s1-t1" name="Cenario 1: Login Com Sucesso" line="20">
+<robot generator="Robot 7.3.2 (Python 3.12.3 on win32)" generated="2025-12-04T10:10:18.935018" rpa="false" schemaversion="5">
+<suite id="s1" name="Testes" source="C:\Users\victor_santini\Documents\codes\projetoFinale\testes">
+<suite id="s1-s1" name="Teste Admin Crud" source="C:\Users\victor_santini\Documents\codes\projetoFinale\testes\teste_admin_crud.robot">
+<kw name="Preparar Ambiente De Teste" type="SETUP">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.199185" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-12-04T10:10:19.199185" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-12-04T10:10:19.201551" level="INFO">Connect to DB using : sqlite3.connect(database='./instance/musics.db')</msg>
+<arg>${DB_MODULE}</arg>
+<arg>${DB_PATH}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.199185" elapsed="0.002366"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.201551" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;INSERT INTO genero (nome) VALUES ('Robot Rock');&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.211731" level="INFO">Commit the transaction</msg>
+<arg>INSERT INTO genero (nome) VALUES ('Robot Rock');</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.201551" elapsed="0.015176"/>
+</kw>
+<kw name="Query" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.216727" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;SELECT id FROM genero WHERE nome = 'Robot Rock';&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.216727" level="INFO">Commit the transaction</msg>
+<msg time="2025-12-04T10:10:19.216727" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;id&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;16&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg time="2025-12-04T10:10:19.218136" level="INFO">${res_gen} = [(16,)]</msg>
+<var>${res_gen}</var>
+<arg>SELECT id FROM genero WHERE nome = 'Robot Rock';</arg>
+<doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
+The type of row values depends on the database module -
+usually they are tuples or tuple-like objects.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.216727" elapsed="0.001409"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.218136" level="INFO">${GENERO_ID} = 16</msg>
+<arg>${GENERO_ID}</arg>
+<arg>${res_gen}[0][0]</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.218136" elapsed="0.000000"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.218136" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;INSERT INTO artista (nome) VALUES ('Daft Punk Robot');&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.219150" level="INFO">Commit the transaction</msg>
+<arg>INSERT INTO artista (nome) VALUES ('Daft Punk Robot');</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.218136" elapsed="0.006190"/>
+</kw>
+<kw name="Query" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.224326" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;SELECT id FROM artista WHERE nome = 'Daft Punk Robot';&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.224326" level="INFO">Commit the transaction</msg>
+<msg time="2025-12-04T10:10:19.224326" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;id&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;15&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg time="2025-12-04T10:10:19.224326" level="INFO">${res_art} = [(15,)]</msg>
+<var>${res_art}</var>
+<arg>SELECT id FROM artista WHERE nome = 'Daft Punk Robot';</arg>
+<doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
+The type of row values depends on the database module -
+usually they are tuples or tuple-like objects.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.224326" elapsed="0.000000"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.225318" level="INFO">${ARTISTA_ID} = 15</msg>
+<arg>${ARTISTA_ID}</arg>
+<arg>${res_art}[0][0]</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.224326" elapsed="0.000992"/>
+</kw>
+<kw name="Criar Sessao Web">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.225318" level="INFO">Creating Session using : alias=flask_app, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>alias=flask_app</arg>
+<arg>url=${URL_BASE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-12-04T10:10:19.225318" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-12-04T10:10:19.225318" elapsed="0.000000"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.232319" level="INFO">GET Request : url=http://127.0.0.1:5000/register 
+ path_url=/register 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-12-04T10:10:19.232319" level="INFO">GET Response : url=http://127.0.0.1:5000/register 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.3', 'Date': 'Thu, 04 Dec 2025 13:10:19 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '6720', 'Vary': 'Cookie', 'Set-Cookie': 'session=eyJjc3JmX3Rva2VuIjoiZWJhYjlmZTczZjUyMzk2Y2I5NzcwYTA0YzQzMzg2ZTIwYjdkYTgzOSJ9.aTGIOw.QRhNe8U2n9lQFS2BJwRulumnGso; HttpOnly; Path=/', 'Connection': 'close'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;title&gt;Sync - Criar Conta&lt;/title&gt;
+
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            900: '#121212',
+                            800: '#181818',
+                            700: '#282828',
+                        },
+                        purple: {
+                            '500': '#A435F0',
+                            '400': '#C084FC',
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-neutral-900 text-white font-sans flex flex-col min-h-screen"&gt;
+
+    
+
+    
+    
+    &lt;header class="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-10"&gt;
+        &lt;a href="/" class="flex items-center gap-2"&gt;
+            &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+            &lt;/svg&gt;
+            &lt;span class="text-xl font-bold"&gt;Sync&lt;/span&gt;
+        &lt;/a&gt;
+        
+        
+            &lt;div class="flex items-center gap-4"&gt;
+                &lt;span class="text-gray-400"&gt;Já tem uma conta?&lt;/span&gt;
+                &lt;a href="/login" class="bg-purple-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-purple-600 transition-colors"&gt;
+                    Entrar
+                &lt;/a&gt;
+            &lt;/div&gt;
+        
+    &lt;/header&gt;
+    
+
+
+    &lt;main class="flex-grow flex flex-col items-center justify-center px-6 pt-32 pb-16"&gt;
+
+        &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-16 h-16 text-purple-500 mb-4"&gt;
+            &lt;path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+        &lt;/svg&gt;
+
+        &lt;h1 class="text-4xl font-bold mb-2 text-center"&gt;Crie sua conta&lt;/h1&gt;
+        &lt;p class="text-lg text-gray-400 mb-12 text-center"&gt;Vamos começar sua jornada musical&lt;/p&gt;
+
+        &lt;div class="bg-neutral-800 rounded-lg p-8 max-w-md w-full shadow-lg"&gt;
+            
+            &lt;form method="POST" action="/register"&gt;
+                &lt;input id="csrf_token" name="csrf_token" type="hidden" value="ImViYWI5ZmU3M2Y1MjM5NmNiOTc3MGEwNGM0MzM4NmUyMGI3ZGE4Mzki.aTGIOw.we_52KqiblvkCOhGNG8DS5rCmUc"&gt; &lt;div class="mb-4"&gt;
+                    &lt;label class="block text-sm font-medium text-gray-300 mb-2" for="nome"&gt;Nome&lt;/label&gt;
+                    &lt;input class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" id="nome" minlength="2" name="nome" required type="text" value=""&gt;
+                    
+                &lt;/div&gt;
+                
+                &lt;div class="mb-4"&gt;
+                    &lt;label class="block text-sm font-medium text-gray-300 mb-2" for="email"&gt;Email&lt;/label&gt;
+                    &lt;input class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" id="email" name="email" required type="text" value=""&gt;
+                    
+                &lt;/div&gt;
+                
+                &lt;div class="mb-6"&gt;
+                    &lt;label class="block text-sm font-medium text-gray-300 mb-2" for="senha"&gt;Senha&lt;/label&gt;
+                    &lt;input class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" id="senha" minlength="6" name="senha" required type="password" value=""&gt;
+                    
+                &lt;/div&gt;
+                
+                &lt;input class="w-full bg-purple-500 text-white font-semibold py-3 rounded-lg hover:bg-purple-600 transition-colors mb-6 cursor-pointer" id="submit" name="submit" type="submit" value="Criar conta e continuar"&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+
+        &lt;p class="text-center mt-8 text-gray-400"&gt;
+            Já tem uma conta? &lt;a href="/login"
+                class="font-semibold text-purple-400 hover:text-purple-300"&gt;Entrar&lt;/a&gt;
+        &lt;/p&gt;
+    &lt;/main&gt;
+
+    &lt;footer class="w-full border-t border-neutral-700 mt-20 px-6 py-12"&gt;
+    &lt;div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10"&gt;
+        &lt;div&gt;
+            &lt;a href="/" class="flex items-center gap-2 mb-4"&gt;
+                &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+                &lt;/svg&gt;
+                &lt;span class="text-xl font-bold"&gt;Sync&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;p class="text-gray-400 text-sm"&gt;Descubra músicas que combinam com você. Recomendações personalizadas baseadas no seu gosto musical.&lt;/p&gt;
+        &lt;/div&gt;
+        
+        &lt;div&gt;
+            &lt;h3 class="text-lg font-semibold mb-4"&gt;Links&lt;/h3&gt;
+            &lt;ul class="space-y-2"&gt;
+                &lt;li&gt;&lt;a href="/" class="text-gray-400 hover:text-white"&gt;Início&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/sobre" class="text-gray-400 hover:text-white"&gt;Sobre&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;div class="text-center text-gray-500 mt-10 pt-10 border-t border-neutral-700"&gt;
+        &amp;copy; 2025 Sync – Todos os direitos reservados.
+    &lt;/div&gt;
+&lt;/footer&gt;
+
+
+
+&lt;/body&gt;
+&lt;/html&gt; 
+ </msg>
+<msg time="2025-12-04T10:10:19.232319" level="INFO">${resp_reg} = &lt;Response [200]&gt;</msg>
+<var>${resp_reg}</var>
+<arg>alias=flask_app</arg>
+<arg>url=/register</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.225318" elapsed="0.007001"/>
+</kw>
+<kw name="Obter Token CSRF">
+<kw name="Get Regexp Matches" owner="String">
+<msg time="2025-12-04T10:10:19.233319" level="INFO">${matches} = ['ImViYWI5ZmU3M2Y1MjM5NmNiOTc3MGEwNGM0MzM4NmUyMGI3ZGE4Mzki.aTGIOw.we_52KqiblvkCOhGNG8DS5rCmUc']</msg>
+<var>${matches}</var>
+<arg>${html_content}</arg>
+<arg>name="csrf_token" type="hidden" value="(.+?)"</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.233319" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.233319" level="INFO">${token} = ImViYWI5ZmU3M2Y1MjM5NmNiOTc3MGEwNGM0MzM4NmUyMGI3ZGE4Mzki.aTGIOw.we_52KqiblvkCOhGNG8DS5rCmUc</msg>
+<var>${token}</var>
+<arg>${matches}[0]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.233319" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${token}</value>
+<status status="PASS" start="2025-12-04T10:10:19.233319" elapsed="0.000000"/>
+</return>
+<msg time="2025-12-04T10:10:19.233319" level="INFO">${token_reg} = ImViYWI5ZmU3M2Y1MjM5NmNiOTc3MGEwNGM0MzM4NmUyMGI3ZGE4Mzki.aTGIOw.we_52KqiblvkCOhGNG8DS5rCmUc</msg>
+<var>${token_reg}</var>
+<arg>${resp_reg.text}</arg>
+<status status="PASS" start="2025-12-04T10:10:19.232319" elapsed="0.001000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.233319" level="INFO">${dados_reg} = {'nome': 'Robot Admin', 'email': 'admin_robot@gmail.com', 'senha': '123456', 'csrf_token': 'ImViYWI5ZmU3M2Y1MjM5NmNiOTc3MGEwNGM0MzM4NmUyMGI3ZGE4Mzki.aTGIOw.we_52KqiblvkCOhGNG8DS5rCmUc'}</msg>
+<var>${dados_reg}</var>
+<arg>nome=${NOME_ADMIN}</arg>
+<arg>email=${EMAIL_ADMIN}</arg>
+<arg>senha=${SENHA_ADMIN}</arg>
+<arg>csrf_token=${token_reg}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.233319" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.445706" level="INFO">POST Request : url=http://127.0.0.1:5000/register (redirected) 
+ path_url=/register 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'session=eyJjc3JmX3Rva2VuIjoiZWJhYjlmZTczZjUyMzk2Y2I5NzcwYTA0YzQzMzg2ZTIwYjdkYTgzOSJ9.aTGIOw.QRhNe8U2n9lQFS2BJwRulumnGso', 'Content-Length': '162', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=nome=Robot+Admin&amp;email=admin_robot%40gmail.com&amp;senha=123456&amp;csrf_token=ImViYWI5ZmU3M2Y1MjM5NmNiOTc3MGEwNGM0MzM4NmUyMGI3ZGE4Mzki.aTGIOw.we_52KqiblvkCOhGNG8DS5rCmUc 
+ </msg>
+<msg time="2025-12-04T10:10:19.445706" level="INFO">GET Response : url=http://127.0.0.1:5000/escolher-gostos 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.3', 'Date': 'Thu, 04 Dec 2025 13:10:19 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '22974', 'Vary': 'Cookie', 'Set-Cookie': 'session=.eJwljkuOAjEMBe-S9Sz8SeyYy7QSxxZopBmpG1aIu9OIXb3avHqWLfc4ruVy3x_xU7bbKpfiERbCoZK2pFuDNbBJd7NJi-oKVsABs00I6VWkYQtBAgxN14kRGYN8sHYnToO2aoUOyYQGg7hruLAvm1AJfcjqfB6dlA3LGfI4Yv_W4Gf7sed2__-Nv9PEHNMylLMRm_g0VRhQvTJ3CYKpa3S28noDEps_Jw.aTGIOw.QrVlciBzioX91I9Mp6N02ADapJY; HttpOnly; Path=/', 'Connection': 'close'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;title&gt;Sync - Personalizar Experiência&lt;/title&gt;
+
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            900: '#121212',
+                            800: '#181818',
+                            700: '#282828',
+                        },
+                        purple: {
+                            '500': '#A435F0',
+                            '400': '#C084FC',
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-neutral-900 text-white font-sans flex flex-col min-h-screen"&gt;
+
+    
+
+    
+    &lt;header class="sticky top-0 bg-neutral-900/80 backdrop-blur-sm w-full p-6 flex justify-between items-center z-10 border-b border-neutral-800"&gt;
+        &lt;div class="flex items-center gap-8"&gt;
+            &lt;a href="/" class="flex items-center gap-2"&gt;
+                &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+                &lt;/svg&gt;
+                &lt;span class="text-xl font-bold hidden sm:block"&gt;Sync&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;div class="flex items-center gap-6"&gt;
+            &lt;nav class="hidden md:flex items-center gap-6"&gt;
+                &lt;a href="/" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Recomendações
+                &lt;/a&gt;
+                &lt;a href="/perfil" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Meu Perfil
+                &lt;/a&gt;
+                &lt;a href="/sobre" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Sobre
+                &lt;/a&gt;
+                
+            &lt;/nav&gt;
+            &lt;div class="flex items-center gap-4"&gt;
+                &lt;span class="text-gray-300 hidden lg:block"&gt;Olá, Robot Admin!&lt;/span&gt;
+                &lt;a href="/logout" class="text-gray-400 font-medium hover:text-white text-sm"&gt;Sair&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+
+
+
+    &lt;main class="flex-grow flex flex-col items-center justify-center px-6 pt-16 pb-16"&gt;
+        
+        
+            
+            &lt;div class="mb-4 max-w-2xl w-full"&gt;
+                
+                &lt;div class="px-4 py-3 rounded mb-2 
+                    bg-green-200 text-green-900
+                    "&gt;
+                    Conta criada com sucesso! Agora, personalize seus gostos.
+                &lt;/div&gt;
+                
+            &lt;/div&gt;
+            
+        
+
+        &lt;h1 class="text-4xl font-bold mb-2 text-center"&gt;Personalize sua experiência&lt;/h1&gt;
+        &lt;p class="text-lg text-gray-400 mb-8 text-center"&gt;Escolha seus gostos para ótimas recomendações.&lt;/p&gt;
+
+        &lt;div class="bg-neutral-800 rounded-lg p-8 max-w-2xl w-full shadow-lg"&gt;
+            &lt;form id="form-gostos" method="POST" action="/escolher-gostos"&gt;
+                
+                &lt;div class="mb-6"&gt;
+                    &lt;label class="block text-lg font-medium text-white mb-2"&gt;
+                        Quais gêneros você curte? 
+                        &lt;span class="text-sm text-gray-400 font-normal"&gt;(selecione pelo menos 3)&lt;/span&gt;
+                    &lt;/label&gt;
+                    &lt;p class="text-sm text-gray-400 mb-4" id="contador-generos"&gt;0 selecionados&lt;/p&gt;
+                    &lt;div class="flex flex-wrap gap-3"&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="1" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Jazz
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="2" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Rock
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="3" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                MPB
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="4" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Funk
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="5" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Hip Hop
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="6" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Pop
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="7" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Reggae
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="8" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Sertanejo
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="9" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Modão
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="10" class="hidden peer genero-checkbox"
+                     ... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<arg>alias=flask_app</arg>
+<arg>url=/register</arg>
+<arg>data=${dados_reg}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.233319" elapsed="0.212387"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.446707" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;UPDATE user SET is_admin = 1 WHERE email = 'admin_robot@gmail.com';&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.447706" level="INFO">Commit the transaction</msg>
+<arg>UPDATE user SET is_admin = 1 WHERE email = '${EMAIL_ADMIN}';</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.445706" elapsed="0.009018"/>
+</kw>
+<status status="PASS" start="2025-12-04T10:10:19.198192" elapsed="0.256532"/>
+</kw>
+<test id="s1-s1-t1" name="Cenario 1: Autenticar Como Admin (Com Token CSRF)" line="23">
+<kw name="Criar Sessao Web">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.454724" level="INFO">Creating Session using : alias=flask_app, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>alias=flask_app</arg>
+<arg>url=${URL_BASE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-12-04T10:10:19.454724" elapsed="0.000991"/>
+</kw>
+<status status="PASS" start="2025-12-04T10:10:19.454724" elapsed="0.000991"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.459715" level="INFO">GET Request : url=http://127.0.0.1:5000/login 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-12-04T10:10:19.459715" level="INFO">GET Response : url=http://127.0.0.1:5000/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.3', 'Date': 'Thu, 04 Dec 2025 13:10:19 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '6330', 'Vary': 'Cookie', 'Set-Cookie': 'session=eyJjc3JmX3Rva2VuIjoiODg3YmY4NDk2ZTM5YmEzMWMyZDI4ZTllZjBlMWU4YjkyNDA2ZDQxZCJ9.aTGIOw.hmiWiEDMDEmtQRK01ymtFC6BLaQ; HttpOnly; Path=/', 'Connection': 'close'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;title&gt;Sync - Login&lt;/title&gt;
+
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            900: '#121212',
+                            800: '#181818',
+                            700: '#282828',
+                        },
+                        purple: {
+                            '500': '#A435F0',
+                            '400': '#C084FC',
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-neutral-900 text-white font-sans flex flex-col min-h-screen"&gt;
+
+    
+    
+    
+    
+    &lt;header class="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-10"&gt;
+        &lt;a href="/" class="flex items-center gap-2"&gt;
+            &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+            &lt;/svg&gt;
+            &lt;span class="text-xl font-bold"&gt;Sync&lt;/span&gt;
+        &lt;/a&gt;
+        
+        
+            &lt;div class="flex items-center gap-4"&gt;
+                &lt;span class="text-gray-400"&gt;Ainda não tem conta?&lt;/span&gt;
+                &lt;a href="/register" class="bg-purple-500 text-white font-semibold px-5 py-2 rounded-full hover:bg-purple-600 transition-colors"&gt;
+                    Cadastrar-se
+                &lt;/a&gt;
+            &lt;/div&gt;
+        
+    &lt;/header&gt;
+    
+
+
+    &lt;main class="flex-grow flex flex-col items-center justify-center px-6 pt-32 pb-16"&gt;
+        
+        
+            
+        
+
+        &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-16 h-16 text-purple-500 mb-4"&gt;
+            &lt;path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+        &lt;/svg&gt;
+
+        &lt;h1 class="text-4xl font-bold mb-2 text-center"&gt;Bem-vindo de volta!&lt;/h1&gt;
+        &lt;p class="text-lg text-gray-400 mb-12 text-center"&gt;Entre para continuar descobrindo músicas&lt;/p&gt;
+
+        &lt;div class="bg-neutral-800 rounded-lg p-8 max-w-md w-full shadow-lg"&gt;
+            &lt;form method="POST" action="/login"&gt;
+                &lt;input id="csrf_token" name="csrf_token" type="hidden" value="Ijg4N2JmODQ5NmUzOWJhMzFjMmQyOGU5ZWYwZTFlOGI5MjQwNmQ0MWQi.aTGIOw.XNoDzg-jBjiNw1Y6AX7z26dmYy8"&gt; &lt;div class="mb-4"&gt;
+                    &lt;label class="block text-sm font-medium text-gray-300 mb-2" for="email"&gt;Email&lt;/label&gt;
+                    &lt;input class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" id="email" name="email" required type="text" value=""&gt;
+                    
+                &lt;/div&gt;
+                
+                &lt;div class="mb-6"&gt;
+                    &lt;label class="block text-sm font-medium text-gray-300 mb-2" for="senha"&gt;Senha&lt;/label&gt;
+                    &lt;input class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" id="senha" name="senha" required type="password" value=""&gt;
+                    
+                &lt;/div&gt;
+                
+                &lt;input class="w-full bg-purple-500 text-white font-semibold py-3 rounded-lg hover:bg-purple-600 transition-colors mb-6 cursor-pointer" id="submit" name="submit" type="submit" value="Entrar"&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+        
+        &lt;p class="text-center mt-8 text-gray-400"&gt;
+            Ainda não tem conta? &lt;a href="/register"
+                class="font-semibold text-purple-400 hover:text-purple-300"&gt;Cadastrar-se&lt;/a&gt;
+        &lt;/p&gt;
+    &lt;/main&gt;
+
+    &lt;footer class="w-full border-t border-neutral-700 mt-20 px-6 py-12"&gt;
+    &lt;div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10"&gt;
+        &lt;div&gt;
+            &lt;a href="/" class="flex items-center gap-2 mb-4"&gt;
+                &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+                &lt;/svg&gt;
+                &lt;span class="text-xl font-bold"&gt;Sync&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;p class="text-gray-400 text-sm"&gt;Descubra músicas que combinam com você. Recomendações personalizadas baseadas no seu gosto musical.&lt;/p&gt;
+        &lt;/div&gt;
+        
+        &lt;div&gt;
+            &lt;h3 class="text-lg font-semibold mb-4"&gt;Links&lt;/h3&gt;
+            &lt;ul class="space-y-2"&gt;
+                &lt;li&gt;&lt;a href="/" class="text-gray-400 hover:text-white"&gt;Início&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/sobre" class="text-gray-400 hover:text-white"&gt;Sobre&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;div class="text-center text-gray-500 mt-10 pt-10 border-t border-neutral-700"&gt;
+        &amp;copy; 2025 Sync – Todos os direitos reservados.
+    &lt;/div&gt;
+&lt;/footer&gt;
+
+
+
+&lt;/body&gt;
+&lt;/html&gt; 
+ </msg>
+<msg time="2025-12-04T10:10:19.459715" level="INFO">${resp_get} = &lt;Response [200]&gt;</msg>
+<var>${resp_get}</var>
+<arg>alias=flask_app</arg>
+<arg>url=/login</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.455715" elapsed="0.004000"/>
+</kw>
+<kw name="Obter Token CSRF">
+<kw name="Get Regexp Matches" owner="String">
+<msg time="2025-12-04T10:10:19.460715" level="INFO">${matches} = ['Ijg4N2JmODQ5NmUzOWJhMzFjMmQyOGU5ZWYwZTFlOGI5MjQwNmQ0MWQi.aTGIOw.XNoDzg-jBjiNw1Y6AX7z26dmYy8']</msg>
+<var>${matches}</var>
+<arg>${html_content}</arg>
+<arg>name="csrf_token" type="hidden" value="(.+?)"</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.460715" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.460715" level="INFO">${token} = Ijg4N2JmODQ5NmUzOWJhMzFjMmQyOGU5ZWYwZTFlOGI5MjQwNmQ0MWQi.aTGIOw.XNoDzg-jBjiNw1Y6AX7z26dmYy8</msg>
+<var>${token}</var>
+<arg>${matches}[0]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.460715" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${token}</value>
+<status status="PASS" start="2025-12-04T10:10:19.460715" elapsed="0.000000"/>
+</return>
+<msg time="2025-12-04T10:10:19.460715" level="INFO">${csrf_token} = Ijg4N2JmODQ5NmUzOWJhMzFjMmQyOGU5ZWYwZTFlOGI5MjQwNmQ0MWQi.aTGIOw.XNoDzg-jBjiNw1Y6AX7z26dmYy8</msg>
+<var>${csrf_token}</var>
+<arg>${resp_get.text}</arg>
+<status status="PASS" start="2025-12-04T10:10:19.459715" elapsed="0.001000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.461715" level="INFO">Token encontrado: Ijg4N2JmODQ5NmUzOWJhMzFjMmQyOGU5ZWYwZTFlOGI5MjQwNmQ0MWQi.aTGIOw.XNoDzg-jBjiNw1Y6AX7z26dmYy8</msg>
+<arg>Token encontrado: ${csrf_token}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.460715" elapsed="0.001000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.461715" level="INFO">${data} = {'email': 'admin_robot@gmail.com', 'senha': '123456', 'csrf_token': 'Ijg4N2JmODQ5NmUzOWJhMzFjMmQyOGU5ZWYwZTFlOGI5MjQwNmQ0MWQi.aTGIOw.XNoDzg-jBjiNw1Y6AX7z26dmYy8'}</msg>
+<var>${data}</var>
+<arg>email=${EMAIL_ADMIN}</arg>
+<arg>senha=${SENHA_ADMIN}</arg>
+<arg>csrf_token=${csrf_token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.461715" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.663326" level="INFO">POST Request : url=http://127.0.0.1:5000/login (redirected) 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'session=eyJjc3JmX3Rva2VuIjoiODg3YmY4NDk2ZTM5YmEzMWMyZDI4ZTllZjBlMWU4YjkyNDA2ZDQxZCJ9.aTGIOw.hmiWiEDMDEmtQRK01ymtFC6BLaQ', 'Content-Length': '145', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=email=admin_robot%40gmail.com&amp;senha=123456&amp;csrf_token=Ijg4N2JmODQ5NmUzOWJhMzFjMmQyOGU5ZWYwZTFlOGI5MjQwNmQ0MWQi.aTGIOw.XNoDzg-jBjiNw1Y6AX7z26dmYy8 
+ </msg>
+<msg time="2025-12-04T10:10:19.663326" level="INFO">GET Response : url=http://127.0.0.1:5000/escolher-gostos 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.3', 'Date': 'Thu, 04 Dec 2025 13:10:19 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '23088', 'Vary': 'Cookie', 'Set-Cookie': 'session=.eJwlzjtuAzEMBNC7qE5BihJF-jILiR_YCJAAu3YV5O5WkG5mmnk_5cgzrnu5Pc9XfJTj4eVWLEKDKQanOot28ImdxVRX9do8aABOWH1BsDTmjj0YK2CMtLEwImNWmzTEKqVC99ZAIKmiwqwkI4zJXBe0ijbZhfbRTtmxbMjrivNfg3_drjOP5_dnfO1FZKyUphykaxLaRskmJwSGLK0N2Bt6-X0DCFI_MA.aTGIOw.GWWpTwSXoIyCljiFcn9yDXgS-FQ; HttpOnly; Path=/', 'Connection': 'close'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;title&gt;Sync - Personalizar Experiência&lt;/title&gt;
+
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            900: '#121212',
+                            800: '#181818',
+                            700: '#282828',
+                        },
+                        purple: {
+                            '500': '#A435F0',
+                            '400': '#C084FC',
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-neutral-900 text-white font-sans flex flex-col min-h-screen"&gt;
+
+    
+
+    
+    &lt;header class="sticky top-0 bg-neutral-900/80 backdrop-blur-sm w-full p-6 flex justify-between items-center z-10 border-b border-neutral-800"&gt;
+        &lt;div class="flex items-center gap-8"&gt;
+            &lt;a href="/" class="flex items-center gap-2"&gt;
+                &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+                &lt;/svg&gt;
+                &lt;span class="text-xl font-bold hidden sm:block"&gt;Sync&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;div class="flex items-center gap-6"&gt;
+            &lt;nav class="hidden md:flex items-center gap-6"&gt;
+                &lt;a href="/" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Recomendações
+                &lt;/a&gt;
+                &lt;a href="/perfil" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Meu Perfil
+                &lt;/a&gt;
+                &lt;a href="/sobre" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Sobre
+                &lt;/a&gt;
+                
+                    &lt;a href="/admin" class="font-medium text-yellow-400 hover:text-white"&gt;Admin&lt;/a&gt;
+                
+            &lt;/nav&gt;
+            &lt;div class="flex items-center gap-4"&gt;
+                &lt;span class="text-gray-300 hidden lg:block"&gt;Olá, Robot Admin!&lt;/span&gt;
+                &lt;a href="/logout" class="text-gray-400 font-medium hover:text-white text-sm"&gt;Sair&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+
+
+
+    &lt;main class="flex-grow flex flex-col items-center justify-center px-6 pt-16 pb-16"&gt;
+        
+        
+            
+            &lt;div class="mb-4 max-w-2xl w-full"&gt;
+                
+                &lt;div class="px-4 py-3 rounded mb-2 
+                    bg-green-200 text-green-900
+                    "&gt;
+                    Login com sucesso! Por favor, personalize seus gostos.
+                &lt;/div&gt;
+                
+            &lt;/div&gt;
+            
+        
+
+        &lt;h1 class="text-4xl font-bold mb-2 text-center"&gt;Personalize sua experiência&lt;/h1&gt;
+        &lt;p class="text-lg text-gray-400 mb-8 text-center"&gt;Escolha seus gostos para ótimas recomendações.&lt;/p&gt;
+
+        &lt;div class="bg-neutral-800 rounded-lg p-8 max-w-2xl w-full shadow-lg"&gt;
+            &lt;form id="form-gostos" method="POST" action="/escolher-gostos"&gt;
+                
+                &lt;div class="mb-6"&gt;
+                    &lt;label class="block text-lg font-medium text-white mb-2"&gt;
+                        Quais gêneros você curte? 
+                        &lt;span class="text-sm text-gray-400 font-normal"&gt;(selecione pelo menos 3)&lt;/span&gt;
+                    &lt;/label&gt;
+                    &lt;p class="text-sm text-gray-400 mb-4" id="contador-generos"&gt;0 selecionados&lt;/p&gt;
+                    &lt;div class="flex flex-wrap gap-3"&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="1" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Jazz
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="2" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Rock
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="3" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                MPB
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="4" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Funk
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="5" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Hip Hop
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="6" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Pop
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="7" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Reggae
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="8" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Sertanejo
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                            &lt;input type="checkbox" name="generos" value="9" class="hidden peer genero-checkbox"
+                                &gt;
+                            &lt;span class="px-4 py-2 bg-neutral-700 rounded-full text-sm font-medium
+                                        peer-checked:bg-purple-500 peer-checked:text-white
+                                        hover:bg-neutral-600 transition-colors"&gt;
+                                Modão
+                            &lt;/span&gt;
+                        &lt;/label&gt;
+                        
+                        &lt;label class="cursor-pointer"&gt;
+                    ... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg time="2025-12-04T10:10:19.663326" level="INFO">${resp_post} = &lt;Response [200]&gt;</msg>
+<var>${resp_post}</var>
+<arg>alias=flask_app</arg>
+<arg>url=/login</arg>
+<arg>data=${data}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.461715" elapsed="0.201611"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${resp_post.text}</arg>
+<arg>Olá, Robot Admin</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.663326" elapsed="0.000999"/>
+</kw>
+<doc>Pega o token da página e faz login.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.454724" elapsed="0.209601"/>
+</test>
+<test id="s1-s1-t2" name="Cenario 2: Criar Musica (POST)" line="42">
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.665326" level="INFO">${generos} = [16]</msg>
+<var>${generos}</var>
+<arg>${GENERO_ID}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.665326" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.666325" level="INFO">${dados_form} = {'titulo': 'Musica Robot Teste', 'artista_id': 15, 'genero_ids': [16]}</msg>
+<var>${dados_form}</var>
+<arg>titulo=Musica Robot Teste</arg>
+<arg>artista_id=${ARTISTA_ID}</arg>
+<arg>genero_ids=${generos}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.665326" elapsed="0.000999"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.702969" level="INFO">POST Request : url=http://127.0.0.1:5000/admin/musicas (redirected) 
+ path_url=/admin/musicas 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'session=.eJwlzjtuAzEMBNC7qE5BihJF-jILiR_YCJAAu3YV5O5WkG5mmnk_5cgzrnu5Pc9XfJTj4eVWLEKDKQanOot28ImdxVRX9do8aABOWH1BsDTmjj0YK2CMtLEwImNWmzTEKqVC99ZAIKmiwqwkI4zJXBe0ijbZhfbRTtmxbMjrivNfg3_drjOP5_dnfO1FZKyUphykaxLaRskmJwSGLK0N2Bt6-X0DCFI_MA.aTGIOw.GWWpTwSXoIyCljiFcn9yDXgS-FQ', 'Content-Length': '53', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=titulo=Musica+Robot+Teste&amp;artista_id=15&amp;genero_ids=16 
+ </msg>
+<msg time="2025-12-04T10:10:19.702969" level="INFO">GET Response : url=http://127.0.0.1:5000/admin 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.3', 'Date': 'Thu, 04 Dec 2025 13:10:19 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '53219', 'Vary': 'Cookie', 'Connection': 'close'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;title&gt;Sync - Painel Admin&lt;/title&gt;
+
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            900: '#121212',
+                            800: '#181818',
+                            700: '#282828',
+                        },
+                        purple: {
+                            '500': '#A435F0',
+                            '400': '#C084FC',
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-neutral-900 text-white font-sans flex flex-col min-h-screen"&gt;
+
+    
+
+    
+    &lt;header class="sticky top-0 bg-neutral-900/80 backdrop-blur-sm w-full p-6 flex justify-between items-center z-10 border-b border-neutral-800"&gt;
+        &lt;div class="flex items-center gap-8"&gt;
+            &lt;a href="/" class="flex items-center gap-2"&gt;
+                &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+                &lt;/svg&gt;
+                &lt;span class="text-xl font-bold hidden sm:block"&gt;Sync&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;div class="flex items-center gap-6"&gt;
+            &lt;nav class="hidden md:flex items-center gap-6"&gt;
+                &lt;a href="/" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Recomendações
+                &lt;/a&gt;
+                &lt;a href="/perfil" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Meu Perfil
+                &lt;/a&gt;
+                &lt;a href="/sobre" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Sobre
+                &lt;/a&gt;
+                
+                    &lt;a href="/admin" class="font-medium text-yellow-400 hover:text-white"&gt;Admin&lt;/a&gt;
+                
+            &lt;/nav&gt;
+            &lt;div class="flex items-center gap-4"&gt;
+                &lt;span class="text-gray-300 hidden lg:block"&gt;Olá, Robot Admin!&lt;/span&gt;
+                &lt;a href="/logout" class="text-gray-400 font-medium hover:text-white text-sm"&gt;Sair&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+
+
+
+    &lt;main class.="flex-grow flex flex-col"&gt;
+        &lt;div class="max-w-6xl mx-auto w-full px-6 pt-16 pb-16"&gt;
+            &lt;h1 class="text-4xl font-bold mb-12"&gt;Painel de Administração&lt;/h1&gt;
+
+            &lt;div class="grid grid-cols-1 md:grid-cols-3 gap-8"&gt;
+                
+                &lt;div class="bg-neutral-800 p-6 rounded-lg shadow-lg"&gt;
+                    &lt;h2 class="text-2xl font-semibold mb-4"&gt;Gêneros&lt;/h2&gt;
+                    &lt;form method="POST" action="/admin/generos" class="mb-6"&gt;
+                        &lt;input type="text" name="nome" placeholder="Nome do Gênero" class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg mb-2" required&gt;
+                        &lt;button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 rounded-lg hover:bg-purple-600"&gt;Adicionar&lt;/button&gt;
+                    &lt;/form&gt;
+                    &lt;ul class="space-y-2 max-h-96 overflow-y-auto"&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Jazz&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/1" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/1" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Rock&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/2" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/2" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;MPB&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/3" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/3" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Funk&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/4" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/4" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Hip Hop&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/5" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/5" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Pop&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/6" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/6" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Reggae&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/7" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/7" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Sertanejo&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/8" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/8" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Modão&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/9" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/9" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Pagode&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/10" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/10" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Metal&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/11" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/11" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rou... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg time="2025-12-04T10:10:19.702969" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>alias=flask_app</arg>
+<arg>url=/admin/musicas</arg>
+<arg>data=${dados_form}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.666325" elapsed="0.036644"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${resp.text}</arg>
+<arg>Musica Robot Teste</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.703970" elapsed="0.000000"/>
+</kw>
+<kw name="Query" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.703970" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;SELECT id FROM musica WHERE titulo = 'Musica Robot Teste';&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.703970" level="INFO">Commit the transaction</msg>
+<msg time="2025-12-04T10:10:19.703970" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;id&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;35&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg time="2025-12-04T10:10:19.703970" level="INFO">${resultado} = [(35,)]</msg>
+<var>${resultado}</var>
+<arg>SELECT id FROM musica WHERE titulo = 'Musica Robot Teste';</arg>
+<doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
+The type of row values depends on the database module -
+usually they are tuples or tuple-like objects.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.703970" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.704980" level="INFO">${id_musica} = 35</msg>
+<var>${id_musica}</var>
+<arg>${resultado}[0][0]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.704980" elapsed="0.000000"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.704980" level="INFO">${ID_MUSICA_CRIADA} = 35</msg>
+<arg>${ID_MUSICA_CRIADA}</arg>
+<arg>${id_musica}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.704980" elapsed="0.000000"/>
+</kw>
+<doc>Cria uma música. (Se houver erro 400/500, pode ser falta de CSRF aqui também)</doc>
+<status status="PASS" start="2025-12-04T10:10:19.664325" elapsed="0.040655"/>
+</test>
+<test id="s1-s1-t3" name="Cenario 3: Ler/Verificar Musica (GET)" line="61">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.720976" level="INFO">GET Request : url=http://127.0.0.1:5000/admin 
+ path_url=/admin 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'session=.eJwlzjtuAzEMBNC7qE5BihJF-jILiR_YCJAAu3YV5O5WkG5mmnk_5cgzrnu5Pc9XfJTj4eVWLEKDKQanOot28ImdxVRX9do8aABOWH1BsDTmjj0YK2CMtLEwImNWmzTEKqVC99ZAIKmiwqwkI4zJXBe0ijbZhfbRTtmxbMjrivNfg3_drjOP5_dnfO1FZKyUphykaxLaRskmJwSGLK0N2Bt6-X0DCFI_MA.aTGIOw.GWWpTwSXoIyCljiFcn9yDXgS-FQ'} 
+ body=None 
+ </msg>
+<msg time="2025-12-04T10:10:19.720976" level="INFO">GET Response : url=http://127.0.0.1:5000/admin 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.3', 'Date': 'Thu, 04 Dec 2025 13:10:19 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '53219', 'Vary': 'Cookie', 'Connection': 'close'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;title&gt;Sync - Painel Admin&lt;/title&gt;
+
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            900: '#121212',
+                            800: '#181818',
+                            700: '#282828',
+                        },
+                        purple: {
+                            '500': '#A435F0',
+                            '400': '#C084FC',
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-neutral-900 text-white font-sans flex flex-col min-h-screen"&gt;
+
+    
+
+    
+    &lt;header class="sticky top-0 bg-neutral-900/80 backdrop-blur-sm w-full p-6 flex justify-between items-center z-10 border-b border-neutral-800"&gt;
+        &lt;div class="flex items-center gap-8"&gt;
+            &lt;a href="/" class="flex items-center gap-2"&gt;
+                &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+                &lt;/svg&gt;
+                &lt;span class="text-xl font-bold hidden sm:block"&gt;Sync&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;div class="flex items-center gap-6"&gt;
+            &lt;nav class="hidden md:flex items-center gap-6"&gt;
+                &lt;a href="/" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Recomendações
+                &lt;/a&gt;
+                &lt;a href="/perfil" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Meu Perfil
+                &lt;/a&gt;
+                &lt;a href="/sobre" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Sobre
+                &lt;/a&gt;
+                
+                    &lt;a href="/admin" class="font-medium text-yellow-400 hover:text-white"&gt;Admin&lt;/a&gt;
+                
+            &lt;/nav&gt;
+            &lt;div class="flex items-center gap-4"&gt;
+                &lt;span class="text-gray-300 hidden lg:block"&gt;Olá, Robot Admin!&lt;/span&gt;
+                &lt;a href="/logout" class="text-gray-400 font-medium hover:text-white text-sm"&gt;Sair&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+
+
+
+    &lt;main class.="flex-grow flex flex-col"&gt;
+        &lt;div class="max-w-6xl mx-auto w-full px-6 pt-16 pb-16"&gt;
+            &lt;h1 class="text-4xl font-bold mb-12"&gt;Painel de Administração&lt;/h1&gt;
+
+            &lt;div class="grid grid-cols-1 md:grid-cols-3 gap-8"&gt;
+                
+                &lt;div class="bg-neutral-800 p-6 rounded-lg shadow-lg"&gt;
+                    &lt;h2 class="text-2xl font-semibold mb-4"&gt;Gêneros&lt;/h2&gt;
+                    &lt;form method="POST" action="/admin/generos" class="mb-6"&gt;
+                        &lt;input type="text" name="nome" placeholder="Nome do Gênero" class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg mb-2" required&gt;
+                        &lt;button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 rounded-lg hover:bg-purple-600"&gt;Adicionar&lt;/button&gt;
+                    &lt;/form&gt;
+                    &lt;ul class="space-y-2 max-h-96 overflow-y-auto"&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Jazz&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/1" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/1" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Rock&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/2" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/2" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;MPB&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/3" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/3" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Funk&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/4" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/4" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Hip Hop&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/5" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/5" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Pop&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/6" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/6" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Reggae&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/7" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/7" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Sertanejo&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/8" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/8" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Modão&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/9" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/9" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Pagode&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/10" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/10" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Metal&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/11" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/11" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rou... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg time="2025-12-04T10:10:19.721979" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>alias=flask_app</arg>
+<arg>url=/admin</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.705971" elapsed="0.016008"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${resp.text}</arg>
+<arg>Musica Robot Teste</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.721979" elapsed="0.000000"/>
+</kw>
+<doc>Verifica dashboard.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.705971" elapsed="0.016008"/>
+</test>
+<test id="s1-s1-t4" name="Cenario 4: Atualizar Musica (POST)" line="66">
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.722986" level="INFO">${generos} = [16]</msg>
+<var>${generos}</var>
+<arg>${GENERO_ID}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.722986" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-12-04T10:10:19.722986" level="INFO">${dados_edit} = {'titulo': 'Musica Editada Robot', 'artista_id': 15, 'genero_ids': [16]}</msg>
+<var>${dados_edit}</var>
+<arg>titulo=Musica Editada Robot</arg>
+<arg>artista_id=${ARTISTA_ID}</arg>
+<arg>genero_ids=${generos}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.722986" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.754638" level="INFO">POST Request : url=http://127.0.0.1:5000/admin/musicas/edit/35 (redirected) 
+ path_url=/admin/musicas/edit/35 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'session=.eJwlzjtuAzEMBNC7qE5BihJF-jILiR_YCJAAu3YV5O5WkG5mmnk_5cgzrnu5Pc9XfJTj4eVWLEKDKQanOot28ImdxVRX9do8aABOWH1BsDTmjj0YK2CMtLEwImNWmzTEKqVC99ZAIKmiwqwkI4zJXBe0ijbZhfbRTtmxbMjrivNfg3_drjOP5_dnfO1FZKyUphykaxLaRskmJwSGLK0N2Bt6-X0DCFI_MA.aTGIOw.GWWpTwSXoIyCljiFcn9yDXgS-FQ', 'Content-Length': '55', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=titulo=Musica+Editada+Robot&amp;artista_id=15&amp;genero_ids=16 
+ </msg>
+<msg time="2025-12-04T10:10:19.754638" level="INFO">GET Response : url=http://127.0.0.1:5000/admin 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.3', 'Date': 'Thu, 04 Dec 2025 13:10:19 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '53221', 'Vary': 'Cookie', 'Connection': 'close'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;title&gt;Sync - Painel Admin&lt;/title&gt;
+
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            900: '#121212',
+                            800: '#181818',
+                            700: '#282828',
+                        },
+                        purple: {
+                            '500': '#A435F0',
+                            '400': '#C084FC',
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-neutral-900 text-white font-sans flex flex-col min-h-screen"&gt;
+
+    
+
+    
+    &lt;header class="sticky top-0 bg-neutral-900/80 backdrop-blur-sm w-full p-6 flex justify-between items-center z-10 border-b border-neutral-800"&gt;
+        &lt;div class="flex items-center gap-8"&gt;
+            &lt;a href="/" class="flex items-center gap-2"&gt;
+                &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+                &lt;/svg&gt;
+                &lt;span class="text-xl font-bold hidden sm:block"&gt;Sync&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;div class="flex items-center gap-6"&gt;
+            &lt;nav class="hidden md:flex items-center gap-6"&gt;
+                &lt;a href="/" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Recomendações
+                &lt;/a&gt;
+                &lt;a href="/perfil" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Meu Perfil
+                &lt;/a&gt;
+                &lt;a href="/sobre" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Sobre
+                &lt;/a&gt;
+                
+                    &lt;a href="/admin" class="font-medium text-yellow-400 hover:text-white"&gt;Admin&lt;/a&gt;
+                
+            &lt;/nav&gt;
+            &lt;div class="flex items-center gap-4"&gt;
+                &lt;span class="text-gray-300 hidden lg:block"&gt;Olá, Robot Admin!&lt;/span&gt;
+                &lt;a href="/logout" class="text-gray-400 font-medium hover:text-white text-sm"&gt;Sair&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+
+
+
+    &lt;main class.="flex-grow flex flex-col"&gt;
+        &lt;div class="max-w-6xl mx-auto w-full px-6 pt-16 pb-16"&gt;
+            &lt;h1 class="text-4xl font-bold mb-12"&gt;Painel de Administração&lt;/h1&gt;
+
+            &lt;div class="grid grid-cols-1 md:grid-cols-3 gap-8"&gt;
+                
+                &lt;div class="bg-neutral-800 p-6 rounded-lg shadow-lg"&gt;
+                    &lt;h2 class="text-2xl font-semibold mb-4"&gt;Gêneros&lt;/h2&gt;
+                    &lt;form method="POST" action="/admin/generos" class="mb-6"&gt;
+                        &lt;input type="text" name="nome" placeholder="Nome do Gênero" class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg mb-2" required&gt;
+                        &lt;button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 rounded-lg hover:bg-purple-600"&gt;Adicionar&lt;/button&gt;
+                    &lt;/form&gt;
+                    &lt;ul class="space-y-2 max-h-96 overflow-y-auto"&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Jazz&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/1" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/1" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Rock&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/2" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/2" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;MPB&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/3" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/3" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Funk&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/4" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/4" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Hip Hop&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/5" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/5" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Pop&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/6" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/6" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Reggae&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/7" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/7" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Sertanejo&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/8" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/8" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Modão&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/9" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/9" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Pagode&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/10" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/10" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Metal&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/11" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/11" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rou... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg time="2025-12-04T10:10:19.754638" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>alias=flask_app</arg>
+<arg>url=/admin/musicas/edit/${ID_MUSICA_CRIADA}</arg>
+<arg>data=${dados_edit}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.722986" elapsed="0.031652"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${resp.text}</arg>
+<arg>Musica Editada Robot</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.754638" elapsed="0.000999"/>
+</kw>
+<doc>Edita a música.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.722986" elapsed="0.032651"/>
+</test>
+<test id="s1-s1-t5" name="Cenario 5: Deletar Musica (GET)" line="75">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-12-04T10:10:19.781815" level="INFO">GET Request : url=http://127.0.0.1:5000/admin/musicas/delete/35 (redirected) 
+ path_url=/admin/musicas/delete/35 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'session=.eJwlzjtuAzEMBNC7qE5BihJF-jILiR_YCJAAu3YV5O5WkG5mmnk_5cgzrnu5Pc9XfJTj4eVWLEKDKQanOot28ImdxVRX9do8aABOWH1BsDTmjj0YK2CMtLEwImNWmzTEKqVC99ZAIKmiwqwkI4zJXBe0ijbZhfbRTtmxbMjrivNfg3_drjOP5_dnfO1FZKyUphykaxLaRskmJwSGLK0N2Bt6-X0DCFI_MA.aTGIOw.GWWpTwSXoIyCljiFcn9yDXgS-FQ'} 
+ body=None 
+ </msg>
+<msg time="2025-12-04T10:10:19.781815" level="INFO">GET Response : url=http://127.0.0.1:5000/admin 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.3', 'Date': 'Thu, 04 Dec 2025 13:10:19 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '52403', 'Vary': 'Cookie', 'Connection': 'close'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;title&gt;Sync - Painel Admin&lt;/title&gt;
+
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            900: '#121212',
+                            800: '#181818',
+                            700: '#282828',
+                        },
+                        purple: {
+                            '500': '#A435F0',
+                            '400': '#C084FC',
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-neutral-900 text-white font-sans flex flex-col min-h-screen"&gt;
+
+    
+
+    
+    &lt;header class="sticky top-0 bg-neutral-900/80 backdrop-blur-sm w-full p-6 flex justify-between items-center z-10 border-b border-neutral-800"&gt;
+        &lt;div class="flex items-center gap-8"&gt;
+            &lt;a href="/" class="flex items-center gap-2"&gt;
+                &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-purple-500"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" /&gt;
+                &lt;/svg&gt;
+                &lt;span class="text-xl font-bold hidden sm:block"&gt;Sync&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;div class="flex items-center gap-6"&gt;
+            &lt;nav class="hidden md:flex items-center gap-6"&gt;
+                &lt;a href="/" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Recomendações
+                &lt;/a&gt;
+                &lt;a href="/perfil" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Meu Perfil
+                &lt;/a&gt;
+                &lt;a href="/sobre" 
+                   class="font-medium pb-1 text-gray-400 hover:text-white"&gt;
+                   Sobre
+                &lt;/a&gt;
+                
+                    &lt;a href="/admin" class="font-medium text-yellow-400 hover:text-white"&gt;Admin&lt;/a&gt;
+                
+            &lt;/nav&gt;
+            &lt;div class="flex items-center gap-4"&gt;
+                &lt;span class="text-gray-300 hidden lg:block"&gt;Olá, Robot Admin!&lt;/span&gt;
+                &lt;a href="/logout" class="text-gray-400 font-medium hover:text-white text-sm"&gt;Sair&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+
+
+
+    &lt;main class.="flex-grow flex flex-col"&gt;
+        &lt;div class="max-w-6xl mx-auto w-full px-6 pt-16 pb-16"&gt;
+            &lt;h1 class="text-4xl font-bold mb-12"&gt;Painel de Administração&lt;/h1&gt;
+
+            &lt;div class="grid grid-cols-1 md:grid-cols-3 gap-8"&gt;
+                
+                &lt;div class="bg-neutral-800 p-6 rounded-lg shadow-lg"&gt;
+                    &lt;h2 class="text-2xl font-semibold mb-4"&gt;Gêneros&lt;/h2&gt;
+                    &lt;form method="POST" action="/admin/generos" class="mb-6"&gt;
+                        &lt;input type="text" name="nome" placeholder="Nome do Gênero" class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg mb-2" required&gt;
+                        &lt;button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 rounded-lg hover:bg-purple-600"&gt;Adicionar&lt;/button&gt;
+                    &lt;/form&gt;
+                    &lt;ul class="space-y-2 max-h-96 overflow-y-auto"&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Jazz&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/1" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/1" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Rock&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/2" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/2" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;MPB&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/3" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/3" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Funk&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/4" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/4" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Hip Hop&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/5" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/5" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Pop&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/6" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/6" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Reggae&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/7" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/7" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Sertanejo&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/8" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/8" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Modão&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/9" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/9" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Pagode&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/10" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/10" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rounded"&gt;
+                            &lt;span&gt;Metal&lt;/span&gt;
+                            &lt;div&gt;
+                                &lt;a href="/admin/generos/edit/11" class="text-blue-400 text-sm mr-2"&gt;Editar&lt;/a&gt;
+                                &lt;a href="/admin/generos/delete/11" class="text-red-400 text-sm" onclick="return confirm('Tem certeza?')"&gt;Excluir&lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                        
+                        &lt;li class="flex justify-between items-center p-2 bg-neutral-700 rou... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg time="2025-12-04T10:10:19.781815" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>alias=flask_app</arg>
+<arg>url=/admin/musicas/delete/${ID_MUSICA_CRIADA}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.755637" elapsed="0.026178"/>
+</kw>
+<kw name="Should Not Contain" owner="BuiltIn">
+<arg>${resp.text}</arg>
+<arg>Musica Editada Robot</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.782812" elapsed="0.000000"/>
+</kw>
+<doc>Deleta a música.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.755637" elapsed="0.027175"/>
+</test>
+<kw name="Limpar Ambiente De Teste" type="TEARDOWN">
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.783812" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM musica WHERE titulo LIKE '%Robot%';&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.783812" level="INFO">Commit the transaction</msg>
+<arg>DELETE FROM musica WHERE titulo LIKE '%Robot%';</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.783812" elapsed="0.000000"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.783812" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM genero WHERE id = 16;&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.784826" level="INFO">Commit the transaction</msg>
+<arg>DELETE FROM genero WHERE id = ${GENERO_ID};</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.783812" elapsed="0.005998"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.790811" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM artista WHERE id = 15;&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.790811" level="INFO">Commit the transaction</msg>
+<arg>DELETE FROM artista WHERE id = ${ARTISTA_ID};</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.790811" elapsed="0.006012"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-12-04T10:10:19.796823" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM user WHERE email = 'admin_robot@gmail.com';&lt;/code&gt;</msg>
+<msg time="2025-12-04T10:10:19.797814" level="INFO">Commit the transaction</msg>
+<arg>DELETE FROM user WHERE email = '${EMAIL_ADMIN}';</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.796823" elapsed="0.007510"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2025-12-04T10:10:19.804333" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-12-04T10:10:19.783812" elapsed="0.020521"/>
+</kw>
+<doc>Teste CRUD Admin com Bypass de CSRF.</doc>
+<status status="PASS" start="2025-12-04T10:10:18.954529" elapsed="0.849804"/>
+</suite>
+<suite id="s1-s2" name="Teste Login" source="C:\Users\victor_santini\Documents\codes\projetoFinale\testes\teste_login.robot">
+<test id="s1-s2-t1" name="Cenario 1: Login Com Sucesso" line="19">
 <kw name="Preparar Navegador E Garantir Logout">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:34.696449" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/login'.</msg>
+<msg time="2025-12-04T10:10:19.925547" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/login'.</msg>
 <arg>${URL_BASE}</arg>
 <arg>${BROWSER}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-12-03T19:30:34.696241" elapsed="1.504512"/>
+<status status="PASS" start="2025-12-04T10:10:19.925547" elapsed="1.495790"/>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2025-12-03T19:30:36.200964" elapsed="0.031162"/>
+<status status="PASS" start="2025-12-04T10:10:21.421337" elapsed="0.027524"/>
 </kw>
 <kw name="Run Keyword And Return Status" owner="BuiltIn">
 <kw name="Wait Until Page Contains" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:38.352440" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg time="2025-12-03T19:30:38.352625" level="FAIL">Text 'Sair' did not appear in 2 seconds.</msg>
+<msg time="2025-12-04T10:10:23.603446" level="FAIL">Text 'Sair' did not appear in 2 seconds.</msg>
 <arg>Sair</arg>
 <arg>timeout=2s</arg>
 <doc>Waits until ``text`` appears on the current page.</doc>
-<status status="FAIL" start="2025-12-03T19:30:36.232542" elapsed="2.121781">Text 'Sair' did not appear in 2 seconds.</status>
+<status status="FAIL" start="2025-12-04T10:10:21.448861" elapsed="2.158120">Text 'Sair' did not appear in 2 seconds.</status>
 </kw>
-<msg time="2025-12-03T19:30:38.354452" level="INFO">${esta_logado} = False</msg>
+<msg time="2025-12-04T10:10:23.607983" level="INFO">${esta_logado} = False</msg>
 <var>${esta_logado}</var>
 <arg>Wait Until Page Contains</arg>
 <arg>Sair</arg>
 <arg>timeout=2s</arg>
 <doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
-<status status="PASS" start="2025-12-03T19:30:36.232337" elapsed="2.122138"/>
+<status status="PASS" start="2025-12-04T10:10:21.448861" elapsed="2.159635"/>
 </kw>
 <kw name="Run Keyword If" owner="BuiltIn">
 <arg>${esta_logado}</arg>
 <arg>Fazer Logout</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" start="2025-12-03T19:30:38.354607" elapsed="0.000122"/>
+<status status="PASS" start="2025-12-04T10:10:23.608496" elapsed="0.000000"/>
 </kw>
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>id:email</arg>
 <arg>timeout=10s</arg>
-<arg>error=O campo de email não apareceu. Verifique o print na pasta de logs.</arg>
+<arg>error=O campo de email não apareceu.</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-12-03T19:30:38.354812" elapsed="0.012341"/>
+<status status="PASS" start="2025-12-04T10:10:23.608496" elapsed="0.015606"/>
 </kw>
-<status status="PASS" start="2025-12-03T19:30:34.695634" elapsed="3.671649"/>
+<status status="PASS" start="2025-12-04T10:10:19.924547" elapsed="3.699555"/>
 </kw>
 <kw name="Preencher Login">
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:38.368008" level="INFO">Typing text 'teste@gmail.com' into text field 'id:email'.</msg>
+<msg time="2025-12-04T10:10:23.625293" level="INFO">Typing text 'teste@gmail.com' into text field 'id:email'.</msg>
 <arg>id:email</arg>
 <arg>${email}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-03T19:30:38.367848" elapsed="0.063192"/>
+<status status="PASS" start="2025-12-04T10:10:23.625293" elapsed="0.106154"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:38.431846" level="INFO">Typing text 'teste123' into text field 'id:senha'.</msg>
+<msg time="2025-12-04T10:10:23.732447" level="INFO">Typing text 'teste123' into text field 'id:senha'.</msg>
 <arg>id:senha</arg>
 <arg>${senha}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-03T19:30:38.431641" elapsed="0.040420"/>
+<status status="PASS" start="2025-12-04T10:10:23.732447" elapsed="0.058861"/>
 </kw>
 <arg>${EMAIL_CORRETO}</arg>
 <arg>${SENHA_CORRETA}</arg>
-<status status="PASS" start="2025-12-03T19:30:38.367554" elapsed="0.104628"/>
+<status status="PASS" start="2025-12-04T10:10:23.625293" elapsed="0.166015"/>
 </kw>
 <kw name="Clicar Em Entrar">
 <kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
 <arg>id:submit</arg>
 <arg>timeout=5s</arg>
 <doc>Waits until the element ``locator`` is enabled.</doc>
-<status status="PASS" start="2025-12-03T19:30:38.472697" elapsed="0.012620"/>
+<status status="PASS" start="2025-12-04T10:10:23.792256" elapsed="0.011503"/>
 </kw>
 <kw name="Click Element" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:38.485658" level="INFO">Clicking element 'id:submit'.</msg>
+<msg time="2025-12-04T10:10:23.803759" level="INFO">Clicking element 'id:submit'.</msg>
 <arg>id:submit</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-03T19:30:38.485483" elapsed="0.362063"/>
+<status status="PASS" start="2025-12-04T10:10:23.803759" elapsed="0.457389"/>
 </kw>
-<status status="PASS" start="2025-12-03T19:30:38.472470" elapsed="0.375186"/>
+<status status="PASS" start="2025-12-04T10:10:23.791308" elapsed="0.469840"/>
 </kw>
 <kw name="Validar Login Com Sucesso">
 <kw name="Wait Until Page Contains" owner="SeleniumLibrary">
 <arg>Olá, teste!</arg>
 <arg>timeout=10s</arg>
 <doc>Waits until ``text`` appears on the current page.</doc>
-<status status="PASS" start="2025-12-03T19:30:38.848155" elapsed="0.010478"/>
+<status status="PASS" start="2025-12-04T10:10:24.261148" elapsed="0.014999"/>
 </kw>
-<status status="PASS" start="2025-12-03T19:30:38.847910" elapsed="0.010830"/>
+<status status="PASS" start="2025-12-04T10:10:24.261148" elapsed="0.014999"/>
 </kw>
-<kw name="Finalizar Teste Com Debug" type="TEARDOWN">
-<msg time="2025-12-03T19:30:38.860492" level="FAIL">No keyword with name 'Finalizar Teste Com Debug' found.</msg>
-<status status="FAIL" start="2025-12-03T19:30:38.860444" elapsed="0.000092">No keyword with name 'Finalizar Teste Com Debug' found.</status>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-12-04T10:10:24.277146" elapsed="2.152077"/>
 </kw>
 <doc>Garante que estamos deslogados, loga e valida o acesso.</doc>
-<status status="FAIL" start="2025-12-03T19:30:34.694901" elapsed="4.165769">Teardown failed:
-No keyword with name 'Finalizar Teste Com Debug' found.</status>
+<status status="PASS" start="2025-12-04T10:10:19.924547" elapsed="6.505684"/>
 </test>
-<test id="s1-t2" name="Cenario 2: Login Com Senha Incorreta" line="29">
+<test id="s1-s2-t2" name="Cenario 2: Login Com Senha Incorreta" line="28">
 <kw name="Preparar Navegador E Garantir Logout">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:38.861756" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/login'.</msg>
+<msg time="2025-12-04T10:10:26.434224" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/login'.</msg>
 <arg>${URL_BASE}</arg>
 <arg>${BROWSER}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-12-03T19:30:38.861586" elapsed="1.481246"/>
+<status status="PASS" start="2025-12-04T10:10:26.434224" elapsed="1.497957"/>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2025-12-03T19:30:40.343001" elapsed="0.023453"/>
+<status status="PASS" start="2025-12-04T10:10:27.932181" elapsed="0.020027"/>
 </kw>
 <kw name="Run Keyword And Return Status" owner="BuiltIn">
 <kw name="Wait Until Page Contains" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:42.477543" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg time="2025-12-03T19:30:42.477701" level="FAIL">Text 'Sair' did not appear in 2 seconds.</msg>
+<msg time="2025-12-04T10:10:30.082588" level="FAIL">Text 'Sair' did not appear in 2 seconds.</msg>
 <arg>Sair</arg>
 <arg>timeout=2s</arg>
 <doc>Waits until ``text`` appears on the current page.</doc>
-<status status="FAIL" start="2025-12-03T19:30:40.366783" elapsed="2.111742">Text 'Sair' did not appear in 2 seconds.</status>
+<status status="FAIL" start="2025-12-04T10:10:27.953213" elapsed="2.130389">Text 'Sair' did not appear in 2 seconds.</status>
 </kw>
-<msg time="2025-12-03T19:30:42.478652" level="INFO">${esta_logado} = False</msg>
+<msg time="2025-12-04T10:10:30.083602" level="INFO">${esta_logado} = False</msg>
 <var>${esta_logado}</var>
 <arg>Wait Until Page Contains</arg>
 <arg>Sair</arg>
 <arg>timeout=2s</arg>
 <doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
-<status status="PASS" start="2025-12-03T19:30:40.366623" elapsed="2.112051"/>
+<status status="PASS" start="2025-12-04T10:10:27.953213" elapsed="2.130389"/>
 </kw>
 <kw name="Run Keyword If" owner="BuiltIn">
 <arg>${esta_logado}</arg>
 <arg>Fazer Logout</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" start="2025-12-03T19:30:42.478803" elapsed="0.000112"/>
+<status status="PASS" start="2025-12-04T10:10:30.084602" elapsed="0.000000"/>
 </kw>
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
 <arg>id:email</arg>
 <arg>timeout=10s</arg>
-<arg>error=O campo de email não apareceu. Verifique o print na pasta de logs.</arg>
+<arg>error=O campo de email não apareceu.</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-12-03T19:30:42.479003" elapsed="0.011077"/>
+<status status="PASS" start="2025-12-04T10:10:30.085601" elapsed="0.016414"/>
 </kw>
-<status status="PASS" start="2025-12-03T19:30:38.861391" elapsed="3.628804"/>
+<status status="PASS" start="2025-12-04T10:10:26.433222" elapsed="3.670145"/>
 </kw>
 <kw name="Preencher Login">
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:42.490921" level="INFO">Typing text 'teste@gmail.com' into text field 'id:email'.</msg>
+<msg time="2025-12-04T10:10:30.103367" level="INFO">Typing text 'teste@gmail.com' into text field 'id:email'.</msg>
 <arg>id:email</arg>
 <arg>${email}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-03T19:30:42.490762" elapsed="0.062888"/>
+<status status="PASS" start="2025-12-04T10:10:30.103367" elapsed="0.173821"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:42.554096" level="INFO">Typing text 'senha_errada' into text field 'id:senha'.</msg>
+<msg time="2025-12-04T10:10:30.278196" level="INFO">Typing text 'senha_errada' into text field 'id:senha'.</msg>
 <arg>id:senha</arg>
 <arg>${senha}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-03T19:30:42.553849" elapsed="0.040429"/>
+<status status="PASS" start="2025-12-04T10:10:30.277188" elapsed="0.088027"/>
 </kw>
 <arg>${EMAIL_CORRETO}</arg>
 <arg>${SENHA_ERRADA}</arg>
-<status status="PASS" start="2025-12-03T19:30:42.490456" elapsed="0.103925"/>
+<status status="PASS" start="2025-12-04T10:10:30.103367" elapsed="0.261848"/>
 </kw>
 <kw name="Clicar Em Entrar">
 <kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
 <arg>id:submit</arg>
 <arg>timeout=5s</arg>
 <doc>Waits until the element ``locator`` is enabled.</doc>
-<status status="PASS" start="2025-12-03T19:30:42.594900" elapsed="0.013578"/>
+<status status="PASS" start="2025-12-04T10:10:30.367213" elapsed="0.022003"/>
 </kw>
 <kw name="Click Element" owner="SeleniumLibrary">
-<msg time="2025-12-03T19:30:42.608820" level="INFO">Clicking element 'id:submit'.</msg>
+<msg time="2025-12-04T10:10:30.390215" level="INFO">Clicking element 'id:submit'.</msg>
 <arg>id:submit</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-03T19:30:42.608649" elapsed="0.336834"/>
+<status status="PASS" start="2025-12-04T10:10:30.390215" elapsed="0.536615"/>
 </kw>
-<status status="PASS" start="2025-12-03T19:30:42.594643" elapsed="0.350947"/>
+<status status="PASS" start="2025-12-04T10:10:30.366213" elapsed="0.560617"/>
 </kw>
 <kw name="Validar Mensagem De Erro">
 <kw name="Wait Until Page Contains" owner="SeleniumLibrary">
 <arg>Login inválido</arg>
 <arg>timeout=5s</arg>
 <doc>Waits until ``text`` appears on the current page.</doc>
-<status status="PASS" start="2025-12-03T19:30:42.946179" elapsed="0.008841"/>
+<status status="PASS" start="2025-12-04T10:10:30.927841" elapsed="0.007998"/>
 </kw>
-<status status="PASS" start="2025-12-03T19:30:42.945908" elapsed="0.009268"/>
+<status status="PASS" start="2025-12-04T10:10:30.926830" elapsed="0.009009"/>
 </kw>
-<kw name="Finalizar Teste Com Debug" type="TEARDOWN">
-<msg time="2025-12-03T19:30:42.958045" level="FAIL">No keyword with name 'Finalizar Teste Com Debug' found.</msg>
-<status status="FAIL" start="2025-12-03T19:30:42.957970" elapsed="0.000125">No keyword with name 'Finalizar Teste Com Debug' found.</status>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-12-04T10:10:30.935839" elapsed="2.072251"/>
 </kw>
 <doc>Tenta logar com senha errada e valida mensagem.</doc>
-<status status="FAIL" start="2025-12-03T19:30:38.861034" elapsed="4.097272">Teardown failed:
-No keyword with name 'Finalizar Teste Com Debug' found.</status>
+<status status="PASS" start="2025-12-04T10:10:26.432223" elapsed="6.575867"/>
 </test>
-<doc>Teste de Login com tratamento de sessão e Screenshots de erro.</doc>
-<status status="FAIL" start="2025-12-03T19:30:34.479041" elapsed="8.480162"/>
+<doc>Teste de Login com tratamento de sessão</doc>
+<status status="PASS" start="2025-12-04T10:10:19.805352" elapsed="13.204737"/>
+</suite>
+<status status="PASS" start="2025-12-04T10:10:18.936011" elapsed="14.077080"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="2" skip="0">All Tests</stat>
+<stat pass="7" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Teste Login" id="s1" pass="0" fail="2" skip="0">Teste Login</stat>
+<stat name="Testes" id="s1" pass="7" fail="0" skip="0">Testes</stat>
+<stat name="Teste Admin Crud" id="s1-s1" pass="5" fail="0" skip="0">Testes.Teste Admin Crud</stat>
+<stat name="Teste Login" id="s1-s2" pass="2" fail="0" skip="0">Testes.Teste Login</stat>
 </suite>
 </statistics>
 <errors>
