@@ -1,6 +1,6 @@
 import os
 from app import app, db, login_manager, bcrypt
-from flask import render_template, redirect, request, session, flash, url_for
+from flask import render_template, redirect, request, session, flash, url_for, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from dotenv import load_dotenv
 from app.models import User, Genero, Artista, Musica, UserGenero, UserArtista
@@ -31,10 +31,10 @@ def sobre():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('home'))        
     form = LoginForm() 
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(email=form.email.data).first()    
         if user and bcrypt.check_password_hash(user.senha, form.senha.data):
             login_user(user)
             if not user.generos and not user.artistas:
@@ -55,7 +55,14 @@ def register():
         is_admin_user = False
         if form.email.data.lower() == 'admin@gmail.com':
             is_admin_user = True
-        novo_user = User(nome=form.nome.data, email=form.email.data, senha=hashed_senha, is_admin=is_admin_user)
+            
+        novo_user = User(
+            nome=form.nome.data, 
+            email=form.email.data, 
+            senha=hashed_senha,
+            is_admin=is_admin_user
+        )
+        
         db.session.add(novo_user)
         db.session.commit()
         login_user(novo_user) 
@@ -72,6 +79,21 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+@app.route("/api/artistas/search")
+@login_required
+def api_search_artistas():
+    query = request.args.get('q', '').strip()
+    
+    if query:
+        artistas = Artista.query.filter(
+            Artista.nome.ilike(f'%{query}%')
+        ).limit(10).all()
+        return jsonify([artista.nome for artista in artistas])
+        
+    else:
+        artistas = Artista.query.order_by(Artista.nome).all()
+        return jsonify([artista.nome for artista in artistas])
 
 @app.route("/escolher-gostos", methods=["GET", "POST"])
 @login_required
@@ -97,7 +119,13 @@ def escolher_gostos():
         return redirect(url_for('home')) 
     generos_selecionados_ids = [ug.genero_id for ug in current_user.generos]
     artistas_selecionados = ", ".join([ua.artista.nome for ua in current_user.artistas])
-    return render_template("escolher_gostos.html", generos=generos, generos_selecionados_ids=generos_selecionados_ids, artistas_selecionados=artistas_selecionados)
+
+    return render_template(
+        "escolher_gostos.html", 
+        generos=generos,
+        generos_selecionados_ids=generos_selecionados_ids,
+        artistas_selecionados=artistas_selecionados
+    )
 
 @app.route("/perfil", methods=["GET", "POST"])
 @login_required
@@ -123,7 +151,13 @@ def perfil():
     generos = Genero.query.all()
     generos_selecionados_ids = [ug.genero_id for ug in current_user.generos]
     artistas_selecionados = ", ".join([ua.artista.nome for ua in current_user.artistas])
-    return render_template("perfil.html", generos=generos, generos_selecionados_ids=generos_selecionados_ids, artistas_selecionados=artistas_selecionados)
+
+    return render_template(
+        "perfil.html", 
+        generos=generos,
+        generos_selecionados_ids=generos_selecionados_ids,
+        artistas_selecionados=artistas_selecionados
+    )
 
 @app.route("/perfil/excluir", methods=["POST"])
 @login_required
@@ -136,34 +170,7 @@ def excluir_conta():
     flash('Sua conta foi excluída permanentemente.', 'success')
     return redirect(url_for('home'))
 
-@app.route("/api/artistas/search")
-@login_required
-def api_search_artistas():
-    query = request.args.get('q', '').strip()
-    
-    if query and len(query) >= 2:
-        artistas = Artista.query.filter(
-            Artista.nome.ilike(f'%{query}%')
-        ).limit(5).all()
-        
-        return jsonify([artista.nome for artista in artistas])
-        
-    elif not query:
-        artistas_populares = db.session.query(
-                Artista, 
-                func.count(UserArtista.artista_id).label('total_favoritos')
-            ) \
-            .join(UserArtista, Artista.id == UserArtista.artista_id) \
-            .group_by(Artista.id) \
-            .order_by(func.count(UserArtista.artista_id).desc()) \
-            .limit(10) \
-            .all()
-        nomes_artistas = [artista[0].nome for artista in artistas_populares]
-        return jsonify(nomes_artistas)
-
-    else:
-        return jsonify([])
-
+# -------------------- ADMIN --------------------
 def admin_required():
     if not current_user.is_authenticated or not current_user.is_admin:
         flash('Acesso negado. Você precisa ser um administrador.', 'danger')
@@ -172,7 +179,8 @@ def admin_required():
 @app.route("/admin")
 @login_required
 def admin_dashboard():
-    admin_required()
+    admin_required() 
+    
     generos = Genero.query.all()
     artistas = Artista.query.all()
     musicas = Musica.query.all()

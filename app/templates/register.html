@@ -21,7 +21,7 @@
             <form method="POST" action="{{ url_for('register') }}">
                 {{ form.hidden_tag() }} <div class="mb-4">
                     {{ form.nome.label(class="block text-sm font-medium text-gray-300 mb-2") }}
-                    {{ form.nome(class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500", placeholder="Seu nome") }}
+                    {{ form.nome(class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500") }}
                     {% for error in form.nome.errors %}
                         <span class="text-red-400 text-sm mt-1">{{ error }}</span>
                     {% endfor %}
@@ -29,7 +29,7 @@
                 
                 <div class="mb-4">
                     {{ form.email.label(class="block text-sm font-medium text-gray-300 mb-2") }}
-                    {{ form.email(class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500", placeholder="seu@email.com") }}
+                    {{ form.email(class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500") }}
                     {% for error in form.email.errors %}
                         <span class="text-red-400 text-sm mt-1">{{ error }}</span>
                     {% endfor %}
@@ -37,7 +37,7 @@
                 
                 <div class="mb-6">
                     {{ form.senha.label(class="block text-sm font-medium text-gray-300 mb-2") }}
-                    {{ form.senha(class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500", placeholder="Pelo menos 6 caracteres") }}
+                    {{ form.senha(class="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500") }}
                     {% for error in form.senha.errors %}
                         <span class="text-red-400 text-sm mt-1">{{ error }}</span>
                     {% endfor %}

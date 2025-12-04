@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-12-03T19:30:34.477558" rpa="false" schemaversion="5">
+<suite id="s1" name="Teste Login" source="C:\Users\Windows 11\victorCodes\projetoFinale\teste_login.robot">
+<test id="s1-t1" name="Cenario 1: Login Com Sucesso" line="20">
+<kw name="Preparar Navegador E Garantir Logout">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:34.696449" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/login'.</msg>
+<arg>${URL_BASE}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-12-03T19:30:34.696241" elapsed="1.504512"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-12-03T19:30:36.200964" elapsed="0.031162"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:38.352440" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-12-03T19:30:38.352625" level="FAIL">Text 'Sair' did not appear in 2 seconds.</msg>
+<arg>Sair</arg>
+<arg>timeout=2s</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="FAIL" start="2025-12-03T19:30:36.232542" elapsed="2.121781">Text 'Sair' did not appear in 2 seconds.</status>
+</kw>
+<msg time="2025-12-03T19:30:38.354452" level="INFO">${esta_logado} = False</msg>
+<var>${esta_logado}</var>
+<arg>Wait Until Page Contains</arg>
+<arg>Sair</arg>
+<arg>timeout=2s</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2025-12-03T19:30:36.232337" elapsed="2.122138"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${esta_logado}</arg>
+<arg>Fazer Logout</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-12-03T19:30:38.354607" elapsed="0.000122"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id:email</arg>
+<arg>timeout=10s</arg>
+<arg>error=O campo de email não apareceu. Verifique o print na pasta de logs.</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-12-03T19:30:38.354812" elapsed="0.012341"/>
+</kw>
+<status status="PASS" start="2025-12-03T19:30:34.695634" elapsed="3.671649"/>
+</kw>
+<kw name="Preencher Login">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:38.368008" level="INFO">Typing text 'teste@gmail.com' into text field 'id:email'.</msg>
+<arg>id:email</arg>
+<arg>${email}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-12-03T19:30:38.367848" elapsed="0.063192"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:38.431846" level="INFO">Typing text 'teste123' into text field 'id:senha'.</msg>
+<arg>id:senha</arg>
+<arg>${senha}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-12-03T19:30:38.431641" elapsed="0.040420"/>
+</kw>
+<arg>${EMAIL_CORRETO}</arg>
+<arg>${SENHA_CORRETA}</arg>
+<status status="PASS" start="2025-12-03T19:30:38.367554" elapsed="0.104628"/>
+</kw>
+<kw name="Clicar Em Entrar">
+<kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
+<arg>id:submit</arg>
+<arg>timeout=5s</arg>
+<doc>Waits until the element ``locator`` is enabled.</doc>
+<status status="PASS" start="2025-12-03T19:30:38.472697" elapsed="0.012620"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:38.485658" level="INFO">Clicking element 'id:submit'.</msg>
+<arg>id:submit</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-12-03T19:30:38.485483" elapsed="0.362063"/>
+</kw>
+<status status="PASS" start="2025-12-03T19:30:38.472470" elapsed="0.375186"/>
+</kw>
+<kw name="Validar Login Com Sucesso">
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<arg>Olá, teste!</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" start="2025-12-03T19:30:38.848155" elapsed="0.010478"/>
+</kw>
+<status status="PASS" start="2025-12-03T19:30:38.847910" elapsed="0.010830"/>
+</kw>
+<kw name="Finalizar Teste Com Debug" type="TEARDOWN">
+<msg time="2025-12-03T19:30:38.860492" level="FAIL">No keyword with name 'Finalizar Teste Com Debug' found.</msg>
+<status status="FAIL" start="2025-12-03T19:30:38.860444" elapsed="0.000092">No keyword with name 'Finalizar Teste Com Debug' found.</status>
+</kw>
+<doc>Garante que estamos deslogados, loga e valida o acesso.</doc>
+<status status="FAIL" start="2025-12-03T19:30:34.694901" elapsed="4.165769">Teardown failed:
+No keyword with name 'Finalizar Teste Com Debug' found.</status>
+</test>
+<test id="s1-t2" name="Cenario 2: Login Com Senha Incorreta" line="29">
+<kw name="Preparar Navegador E Garantir Logout">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:38.861756" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/login'.</msg>
+<arg>${URL_BASE}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-12-03T19:30:38.861586" elapsed="1.481246"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-12-03T19:30:40.343001" elapsed="0.023453"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:42.477543" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-12-03T19:30:42.477701" level="FAIL">Text 'Sair' did not appear in 2 seconds.</msg>
+<arg>Sair</arg>
+<arg>timeout=2s</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="FAIL" start="2025-12-03T19:30:40.366783" elapsed="2.111742">Text 'Sair' did not appear in 2 seconds.</status>
+</kw>
+<msg time="2025-12-03T19:30:42.478652" level="INFO">${esta_logado} = False</msg>
+<var>${esta_logado}</var>
+<arg>Wait Until Page Contains</arg>
+<arg>Sair</arg>
+<arg>timeout=2s</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2025-12-03T19:30:40.366623" elapsed="2.112051"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${esta_logado}</arg>
+<arg>Fazer Logout</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-12-03T19:30:42.478803" elapsed="0.000112"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id:email</arg>
+<arg>timeout=10s</arg>
+<arg>error=O campo de email não apareceu. Verifique o print na pasta de logs.</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-12-03T19:30:42.479003" elapsed="0.011077"/>
+</kw>
+<status status="PASS" start="2025-12-03T19:30:38.861391" elapsed="3.628804"/>
+</kw>
+<kw name="Preencher Login">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:42.490921" level="INFO">Typing text 'teste@gmail.com' into text field 'id:email'.</msg>
+<arg>id:email</arg>
+<arg>${email}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-12-03T19:30:42.490762" elapsed="0.062888"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:42.554096" level="INFO">Typing text 'senha_errada' into text field 'id:senha'.</msg>
+<arg>id:senha</arg>
+<arg>${senha}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-12-03T19:30:42.553849" elapsed="0.040429"/>
+</kw>
+<arg>${EMAIL_CORRETO}</arg>
+<arg>${SENHA_ERRADA}</arg>
+<status status="PASS" start="2025-12-03T19:30:42.490456" elapsed="0.103925"/>
+</kw>
+<kw name="Clicar Em Entrar">
+<kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
+<arg>id:submit</arg>
+<arg>timeout=5s</arg>
+<doc>Waits until the element ``locator`` is enabled.</doc>
+<status status="PASS" start="2025-12-03T19:30:42.594900" elapsed="0.013578"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-12-03T19:30:42.608820" level="INFO">Clicking element 'id:submit'.</msg>
+<arg>id:submit</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-12-03T19:30:42.608649" elapsed="0.336834"/>
+</kw>
+<status status="PASS" start="2025-12-03T19:30:42.594643" elapsed="0.350947"/>
+</kw>
+<kw name="Validar Mensagem De Erro">
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<arg>Login inválido</arg>
+<arg>timeout=5s</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" start="2025-12-03T19:30:42.946179" elapsed="0.008841"/>
+</kw>
+<status status="PASS" start="2025-12-03T19:30:42.945908" elapsed="0.009268"/>
+</kw>
+<kw name="Finalizar Teste Com Debug" type="TEARDOWN">
+<msg time="2025-12-03T19:30:42.958045" level="FAIL">No keyword with name 'Finalizar Teste Com Debug' found.</msg>
+<status status="FAIL" start="2025-12-03T19:30:42.957970" elapsed="0.000125">No keyword with name 'Finalizar Teste Com Debug' found.</status>
+</kw>
+<doc>Tenta logar com senha errada e valida mensagem.</doc>
+<status status="FAIL" start="2025-12-03T19:30:38.861034" elapsed="4.097272">Teardown failed:
+No keyword with name 'Finalizar Teste Com Debug' found.</status>
+</test>
+<doc>Teste de Login com tratamento de sessão e Screenshots de erro.</doc>
+<status status="FAIL" start="2025-12-03T19:30:34.479041" elapsed="8.480162"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Teste Login" id="s1" pass="0" fail="2" skip="0">Teste Login</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
